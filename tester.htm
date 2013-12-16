@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<meta charset="utf-8" />
+   	<title>Testing ADL wrapper</title>
+ 	<link rel="stylesheet" href="css/validationEngine.jquery.css" type="text/css"/>
+	<link rel="stylesheet" href="css/template.css" type="text/css"/>
+	 
+	<!--<script src="js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>-->
+</head>
+<body>
+	<form id="form1"  class="formular" >
+		<h2>Send Statement</h2>
+		<div class="box">	
+		<p><textarea rows="20" cols="80" name="statment" value="x" id="statement" accept-charset="UTF-8">
+		{"actor" : {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},
+            "verb"  : {"id" : "http://adlnet.gov/expapi/verbs/attempted",
+                       "display" : {"en-US" : "answered"}},
+            "object":{"id" : "http://adlnet.gov/expapi/activities/module/","objectType": "Activity"}}
+</textarea>
+		
+		
+		<label>Paste statement into textarea above  </label><button type= "button" id= "sendstatementBtn1">Send Statement 1</button></p>
+		
+		
+		<p><label>Send predefined hardcoded statement data </label><button type= "button" id= "sendstatementBtn2">Send Statement 2</button></p>
+	
+	</div><!--box-->
+
+<h2>Send State</h2>	
+	<div class="box">	
+
+		<p><textarea rows="20" cols="80" name="stateval" value="type a key:value pair" id="stateval">
+	{
+  "pageArray": [
+	{
+	  "buttonTitle": "Chap. 0 Competency Criteria",
+	  "title": " ",
+	  "url": "page01.htm",
+	  "chapter": 0,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 1: Biological Features",
+	  "title": " ",
+	  "url": "page02.htm",
+	  "chapter": 1,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 1 Interactions Quiz",
+	  "title": "Interactions Quiz",
+	  "url": "page02toc.htm",
+	  "chapter": 1,
+	  "level": 1,
+	  "type": "I",
+	  "quiz": "469585915910",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Attestation Statement",
+	  "title": "",
+	  "url": "attestation.htm",
+	  "chapter": 1,
+	  "level": 1,
+	  "type": "I",
+	  "quiz": "409666286641",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Chap. 1 Learning Objectives Procurement & Husbandry",
+	  "title": " ",
+	  "url": "page03.htm",
+	  "chapter": 1,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Chap. 1 Rat and Mouse Behavior",
+	  "title": " ",
+	  "url": "page02.1.htm",
+	  "chapter": 1,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Chap. 2 Biological Parameters",
+	  "title": " ",
+	  "url": "page02.2.htm",
+	  "chapter": 2,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 2 Case Study",
+	  "title": "",
+	  "url": "quizWrap.htm?call=embed&session=6921972566591293&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php",
+	  "chapter": 2,
+	  "level": 2,
+	  "type": "Q",
+	  "quiz": "6921972566591293",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Chap. 3 Signs of Pain, Illness & Distress",
+	  "title": " ",
+	  "url": "page04.htm",
+	  "chapter": 3,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 3 Interactions Quiz 2",
+	  "title": "Interactions Quiz 2",
+	  "url": "page05q.htm",
+	  "chapter": 3,
+	  "level": 2,
+	  "type": "I",
+	  "quiz": "5679585915911",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Chap. 3 Table of Contents",
+	  "title": " ",
+	  "url": "TOC1.htm",
+	  "chapter": 3,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Ch. 4 Quiz",
+	  "title": "",
+	  "url": "quizWrap.htm?call=embed&session=1140870896389821&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php",
+	  "chapter": 4,
+	  "level": 1,
+	  "type": "Q",
+	  "quiz": "1140870896389821",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Chap. 5 Table of Contents Intro to lab rat",
+	  "title": " ",
+	  "url": "TOC7.htm",
+	  "chapter": 5,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 5 page 8",
+	  "title": " ",
+	  "url": "page08.htm",
+	  "chapter": 5,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Chap. 5 Table of Contents2",
+	  "title": " ",
+	  "url": "TOC8.htm",
+	  "chapter": 5,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Score &amp; Status Page",
+	  "title": "",
+	  "url": "scorePage.htm",
+	  "chapter": 6,
+	  "level": 1
+	}
+  ],
+  "modulevars": {
+	"quizSetupDone": false,
+	"vrsnDone": false,
+	"justOpened": true,
+	"docTitle": "MLearning SCORM-compatible HTML template",
+	"headerTitle": "MLearning SCORM-compatible HTML template",
+	"moduletype": 8,
+	"recommendedMsg": "Recommended",
+	"requiredMsg": "Must be completed to finish module",
+	"completedMsg": "Completed",
+	"contentAuthEmail": ""
+  }
+}
+			</textarea>
+			<button type= "button" id= "sendStateBtn" >Send Module State</button>
+		</p>
+	</div><!--box-->
+	
+	<h2>Get State</h2>		
+	<div class="box">
+		<p>
+			<select name="stateid"   id="stateid">
+				<option value="">Pick a State id to retrieve</option>
+				<option>location2</option>
+				<option>modulestate</option>
+				<option>questionstate</option>
+			</select>			
+			<button type= "button" id= "getStateBtn">Get State</button>
+		</p>
+	</div><!--box-->
+	
+	
+		<h2>Get module-Specific values</h2>		
+	<div class="box" style="height:150px;">
+			<div id="mainmenu" style="float:left;border:1px solid #CCCCCC;margin-right:12px;padding:10px;height:100px"> 	
+				<label>Select data set to retrieve from<br/>State id = "modulestate"
+					<select name="dataset" id="dataset">
+						<option value="">Select dataset</option>
+						<option value="pa">pageArray</option>
+						<option value="mv">modulevars</option>
+					</select>
+				</label>
+			</div>
+			 
+			
+	 
+		<div id="pa"  class="submenu"  style="display:none;float:left;border:1px solid #CCCCCC;padding:10px;height:100px">
+			<label>Select a page in the pagearray
+			<select name="item"  id="item" >
+				<option value="">Select page</option>
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select></label>
+			<label>Select a property of the item
+			<select name="itemprop"  id="itemprop"  >
+				<option value="">Select property</option>
+				<option value="buttonTitle">buttonTitle</option>
+				<option value="chapter">chapter</option>
+				<option value="level">level</option>
+				<option value="type">type</option>
+				<option value="quiz">objective</option>
+				<option value="countscore">countscore</option>
+			</select></label>
+			<button type= "button" id= "getpaStateBtn" >Get pageArray Property from stored State</button></p>
+		</div> <!--pa-->	
+		
+		<div id="mv" class="submenu"  style="display:none;float:left;border:1px solid #CCCCCC;height:100px">
+		 	<select name="modulevars"  id="modulevars"  >
+		 		<option value="" selected>Select var</option>
+				<option>quizSetupDone</option>
+				<option>vrsnDone</option>
+				<option>justOpened</option>
+				<option>headerTitle</option>
+				<option>moduleType</option>
+				<option>recommendedMsg</option>
+				<option>requiredMsg</option>
+				<option>completedMsg</option>
+				<option>contentAuthEmail</option>
+			</select>
+			<button type= "button" id= "getmvStateBtn" >Get modulevars Property from stored State</button></p>
+	 	</div>	
+	 </div><!--box-->
+	
+	<div id="result" style="border:1px solid #CCCCCC;width:100%;margin-top:24px;height:auto;padding:6px;">Results</div>
+	</form>
+
+</body>
+<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+ 
+<script type="text/javascript" src="js/base64.js"></script>
+<script type="text/javascript" src="js/2.5.3-crypto-sha1.js"></script>
+<script type="text/javascript" src="js/verbs.js"></script>
+<script type="text/javascript" src="js/xapiwrapper.js"></script>
+<script type="text/javascript" src="js/config.js"></script>
+<script>
+	var teststmt = {"actor" : {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},
+            "verb"  : {"id" : "http://adlnet.gov/expapi/verbs/attempted",
+                       "display" : {"en-US" : "answered"}},
+            "object":{"id" : "http://adlnet.gov/expapi/activities/module/","objectType": "Activity"}};
+
+	$( document ).ready(function( ) {
+	// remove "selected" from any options that might already be selected
+	 	
+
+//http://stackoverflow.com/questions/1414276/how-to-make-first-option-of-select-selected-with-jquery
+// mark the first option as selected
+		$('select').val('');
+	
+	
+   		//$("#sendstatementBtn1").click( function(){ sendStatement( unescape( $('#statement').html() ) ); });
+   		//$("#sendstatementBtn1").click( function(){ sendStatement( $.parseJSON( unescape( $('#statement').html() ) ) ); });
+   		$("#sendstatementBtn1").click( function(){ sendStatement( $.parseJSON( unescape(cleanTextArea() ) ) ) } );//textarea output has to be cleaned up before sending or you get JSON errors
+   		$("#sendstatementBtn2").click( function(){ sendStatement(teststmt) });
+   		$("#sendStateBtn").click(     function(){ sendState('modulestate', $('#stateval').val() )  })
+    	$("#getStateBtn").click(      function(){ getState($('#stateid').val() ) });
+    	$("#getpaStateBtn").click(      function(){  getValuesFromState('pa')});
+    	$("#getmvStateBtn").click(      function(){ getValuesFromState('mv')  }); 
+    	
+    	$("#dataset").on("change", function (){
+			 $("div.submenu").hide();
+			 var targID  = $(this).val ();
+			 if(typeof targID!="undefined"){
+				var targID  = $(this).val ();
+				$('#'+targID).show();
+			 }	 
+			$('#dataset').blur();
+    	});
+});//end ready function
+
+ 	function cleanTextArea(){
+ 	 	var text = document.forms[0].statement.value;
+		text = text.replace(/\r?\n/g, '');
+	//	text = text.substring(1, text.length-1);
+		return text;
+		}
+	
+	function sendStatement(st){
+				ADL.XAPIWrapper.sendStatement(st, function(resp, obj){ 
+												$('#result').html(
+													
+													'<b>Statement:</b><br/>st.actor='+ st.actor+'<br/>st.id='+st.id+'st.object'+st.object+'<br/>st.verb='+st.verb+'<br/><b style="color:red">Response:</b><br/>obj.id='+obj.id+'<br/>resp.response=' +resp.response) 
+												}); 
+}
+	
+	
+	function sendState(id,val){
+		ADL.XAPIWrapper.sendState("http://adlnet.gov/expapi/activities/module/", {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"}, id, null, val,'','',function(){ console.log('sendState Complete') });
+	}
+	 
+	function getState(id){
+		var respdata=	ADL.XAPIWrapper.getState("http://adlnet.gov/expapi/activities/module/",   {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},  id,'','',
+						function(resp, obj){ 
+										console.log('getState Complete'); 
+											$('#result').html( 'resp.response=' +resp.response) 
+										}); 
+		 	 
+		return respdata;
+	}
+	
+	
+	
+	function getValuesFromState(set){
+	if(set=='pa'){
+		 				//var dataset='pageArray';
+		 				var nn,pp;
+						var itm =( $("#item").val() !="" ? $("#item").val():0 );
+						var qq=($("#itemprop").val()!=""?$("#itemprop").val():null);
+						var respdata=	ADL.XAPIWrapper.getState("http://adlnet.gov/expapi/activities/module/", {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},  'modulestate','','', function(resp, obj){ 
+											console.log('getState Complete'); 
+											nn = JSON.parse(resp.response).pageArray[itm];
+											pp = nn[qq];
+											$('#result').html( 'pageArray['+itm+'].'+qq+'="' +pp +'"') 
+										}); 
+				}//end if
+		
+		
+		else{
+			 
+						//var dataset= 'modulevars';
+						var itm=($("#modulevars").val()!=""?$("#modulevars").val():null);
+					 	var respdata=	ADL.XAPIWrapper.getState("http://adlnet.gov/expapi/activities/module/", {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},  'modulestate','','', function(resp, obj){ 
+											console.log('getState Complete'); 
+											nn = JSON.parse(resp.response).modulevars[itm];
+											 
+											$('#result').html( 'modulevars['+itm+']="' +nn+'"') 
+										}); 	
+		}
+		
+		 	 
+		return respdata;
+	}
+
+function empty(){ 	
+	//ADL.XAPIWrapper.log("[" + obj.id + "]: " + resp.status + " - " + resp.statusText);});
+	//var stateval = {"location":"1234"};
+	//function sendState(activityid, agent, stateid, registration, statevalue, matchHash, noneMatchHash, callback)
+	//ADL.XAPIWrapper.sendState("http://adlnet.gov/expapi/activities/question", {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"}, "questionstate", null, stateval);
+	
+	//function getState(activityid, agent, stateid, registration, since, callback)
+	//var result = ADL.XAPIWrapper.getState("http://adlnet.gov/expapi/activities/question",   {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},  "questionstate");
+	//console.log('result='+result.location);
+	
+	//function getAgents(agent, callback)
+	//ADL.XAPIWrapper.getAgents({"mbox":"mailto:tom@example.com"},  function(r){ADL.XAPIWrapper.log(JSON.parse(r.response));});
+	/*
+	ADL.XAPIWrapper.getActivities()
+	ADL.XAPIWrapper.getActivityProfile()
+	ADL.XAPIWrapper.getAgentProfile()
+	ADL.XAPIWrapper.getAgents()
+	ADL.XAPIWrapper.getState()
+	ADL.XAPIWrapper.getStatements()
+	ADL.XAPIWrapper.hash()
+	ADL.XAPIWrapper.log(message)
+	ADL.XAPIWrapper.prepareStatement
+	ADL.XAPIWrapper.searchParams
+	ADL.XAPIWrapper.sendActivityProfile
+	ADL.XAPIWrapper.sendAgentProfile
+	ADL.XAPIWrapper.sendState
+	ADL.XAPIWrapper.sendStatement
+	ADL.XAPIWrapper.sendStatements
+	ADL.XAPIWrapper.testConfig
+	ADL.XAPIWrapper.updateAuth
+	verbs.answered
+	verbs.asked
+	verbs.attempted
+	verbs.attended
+	verbs.commented
+	verbs.exited
+	verbs.experienced
+	verbs.failed
+	verbs.imported
+	verbs.initialized
+	
+	*/
+	
+	/*var stmt = {
+				"actor" : {"mbox"    : "mailto:ellenm1@test.com"},
+				"verb"  : {
+							"id"     : "http://adlnet.gov/expapi/verbs/answered",
+						   "display" : {"en-US" : "answered"
+						   }
+						  },
+				"object": {"id"      : "http://adlnet.gov/expapi/activities/question"}
+				}
+	var resp_obj = ADL.XAPIWrapper.sendStatement(stmt);
+	ADL.XAPIWrapper.log("[" + resp_obj.id + "]: " + resp_obj.xhr.status + " - " + resp_obj.xhr.statusText);*/
+	
+	
+	/*var stmt = {"actor" : {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},
+				"verb"  : {"id" : "http://adlnet.gov/expapi/verbs/attempted",
+						   "display" : {"en-US" : "answered"}},
+				"object":{"id" : "http://adlnet.gov/expapi/activities/module/","objectType": "Activity"}};*/
+}			
+</script>
+</html>
+
+
+ 

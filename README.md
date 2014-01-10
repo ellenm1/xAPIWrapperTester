@@ -2,6 +2,7 @@ xAPIWrapperTester
 =================
 
 A form I'm using to test all the xAPI calls needed for our learning modules. Depends on the ADL xAPI Wrapper.
+UNDER ACTIVE DEVELOPMENT. 
 
 1. Edit config.js to point to the desired LRS
 Directions for editing config.js:

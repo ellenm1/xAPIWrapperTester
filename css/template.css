@@ -51,6 +51,7 @@ form.formular {
 .formular textarea {
 	width: 98%;
 	height: 200px;
+	height:50px;
 	color: #555;
 	padding: 4px;
 	border: 1px solid #B5B8C8;
@@ -106,4 +107,25 @@ h2 {
 font-size:24px;
 color:#CCCCCC;
 margin-bottom:0px;
+}
+
+textarea.open{
+	height:100px;
+}
+
+textarea.closed{
+	height:12px;
+}
+a.toggles {
+	display:inline-block;
+	height:10px;
+	width:18px;
+	
+}
+a.toggles.closed{
+	height:10px;
+	background:url(../images/arrows-normal.png) 4px 0px;
+}
+a.toggles.open{
+	background:url(../images/arrows-normal.png) 3px 46px;
 }

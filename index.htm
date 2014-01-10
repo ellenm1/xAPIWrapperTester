@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<meta charset="utf-8" />
+   	<title>Testing ADL wrapper</title>
+ 	<link rel="stylesheet" href="css/validationEngine.jquery.css" type="text/css"/>
+	<link rel="stylesheet" href="css/template.css" type="text/css"/>
+	 
+	<!--<script src="js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>-->
+</head>
+<body>
+	<form id="form1"  class="formular" style="left:20px;margin:0px;">
+		
+		<h2>Send Statement</h2>
+		<div class="box">	
+		<p><a href="" id="toggle1" class="toggles closed" onclick="expandtext(this.id);return false;"></a>
+		<span>click to expand</span><textarea rows="10" cols="80" name="statement" value="x" id="statement" accept-charset="UTF-8" class="closed">
+		{"actor" : {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},
+            "verb"  : {"id" : "http://adlnet.gov/expapi/verbs/attempted",
+                       "display" : {"en-US" : "answered"}},
+            "object":{"id" : "http://adlnet.gov/expapi/activities/module/","objectType": "Activity"}}
+</textarea>
+		
+		
+		<label>Paste statement into textarea above  </label><button type= "button" id= "sendStatementBtn0">Send Statement 1</button></p>
+		
+		
+		<p><label>Send predefined hardcoded statement data </label><button type= "button" id= "sendStatementBtn1">Send Statement 2</button></p>
+	
+	</div><!--box-->
+
+<h2>Send State</h2>	
+	<div class="box">	
+
+		<p><a href="" id="toggle2" class="toggles closed" onclick="expandtext(this.id);return false;"></a>
+		<span>click to expand</span><textarea rows="10" cols="80" name="stateval" value="type a key:value pair" id="stateval" class="closed">
+	{
+  "pageArray": [
+	{
+	  "buttonTitle": "Chap. 0 Competency Criteria",
+	  "title": " ",
+	  "url": "page01.htm",
+	  "chapter": 0,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 1: Biological Features",
+	  "title": " ",
+	  "url": "page02.htm",
+	  "chapter": 1,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 1 Interactions Quiz",
+	  "title": "Interactions Quiz",
+	  "url": "page02toc.htm",
+	  "chapter": 1,
+	  "level": 1,
+	  "type": "I",
+	  "quiz": "469585915910",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Attestation Statement",
+	  "title": "",
+	  "url": "attestation.htm",
+	  "chapter": 1,
+	  "level": 1,
+	  "type": "I",
+	  "quiz": "409666286641",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Chap. 1 Learning Objectives Procurement & Husbandry",
+	  "title": " ",
+	  "url": "page03.htm",
+	  "chapter": 1,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Chap. 1 Rat and Mouse Behavior",
+	  "title": " ",
+	  "url": "page02.1.htm",
+	  "chapter": 1,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Chap. 2 Biological Parameters",
+	  "title": " ",
+	  "url": "page02.2.htm",
+	  "chapter": 2,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 2 Case Study",
+	  "title": "",
+	  "url": "quizWrap.htm?call=embed&session=6921972566591293&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php",
+	  "chapter": 2,
+	  "level": 2,
+	  "type": "Q",
+	  "quiz": "6921972566591293",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Chap. 3 Signs of Pain, Illness & Distress",
+	  "title": " ",
+	  "url": "page04.htm",
+	  "chapter": 3,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 3 Interactions Quiz 2",
+	  "title": "Interactions Quiz 2",
+	  "url": "page05q.htm",
+	  "chapter": 3,
+	  "level": 2,
+	  "type": "I",
+	  "quiz": "5679585915911",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Chap. 3 Table of Contents",
+	  "title": " ",
+	  "url": "TOC1.htm",
+	  "chapter": 3,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Ch. 4 Quiz",
+	  "title": "",
+	  "url": "quizWrap.htm?call=embed&session=1140870896389821&href=http://uhqmarkappspr1.med.umich.edu/perception5/session.php",
+	  "chapter": 4,
+	  "level": 1,
+	  "type": "Q",
+	  "quiz": "1140870896389821",
+	  "rm": "",
+	  "countscore": "1"
+	},
+	{
+	  "buttonTitle": "Chap. 5 Table of Contents Intro to lab rat",
+	  "title": " ",
+	  "url": "TOC7.htm",
+	  "chapter": 5,
+	  "level": 1
+	},
+	{
+	  "buttonTitle": "Chap. 5 page 8",
+	  "title": " ",
+	  "url": "page08.htm",
+	  "chapter": 5,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Chap. 5 Table of Contents2",
+	  "title": " ",
+	  "url": "TOC8.htm",
+	  "chapter": 5,
+	  "level": 2
+	},
+	{
+	  "buttonTitle": "Score &amp; Status Page",
+	  "title": "",
+	  "url": "scorePage.htm",
+	  "chapter": 6,
+	  "level": 1
+	}
+  ],
+  "modulevars": {
+	"quizSetupDone": false,
+	"vrsnDone": false,
+	"justOpened": true,
+	"docTitle": "MLearning SCORM-compatible HTML template",
+	"headerTitle": "MLearning SCORM-compatible HTML template",
+	"moduletype": 8,
+	"recommendedMsg": "Recommended",
+	"requiredMsg": "Must be completed to finish module",
+	"completedMsg": "Completed",
+	"contentAuthEmail": ""
+  }
+}
+			</textarea>
+			<button type= "button" id= "sendStateBtn" >Send Module State</button>
+		</p>
+	</div><!--box-->
+	
+	<h2>Get State</h2>		
+	<div class="box">
+		<p>
+			<select name="stateid"   id="stateid">
+				<option value="">Pick a State id to retrieve</option>
+				<option>location2</option>
+				<option>modulestate</option>
+				<option>questionstate</option>
+			</select>			
+			<button type= "button" id= "getStateBtn">Get State</button>
+		</p>
+	</div><!--box-->
+	
+	
+		<h2>Get module-Specific values</h2>		
+	<div class="box" style="height:150px;">
+		<div id="mainmenu" style="float:left;border:1px solid #CCCCCC;margin-right:12px;padding:10px;height:100px"> 	
+				<label>Select data set to retrieve from<br/>State id = "modulestate"
+					<select name="dataset" id="dataset">
+						<option value="">Select a dataset...</option>
+						<option value="pa">pageArray</option>
+						<option value="mv">modulevars</option>
+					</select>
+				</label>
+			</div>	
+	 
+		<div id="pa"  class="submenu"  style="display:none;float:left;border:1px solid #CCCCCC;padding:10px;height:100px">
+			<label>Select a page in the pagearray...
+			<select name="item"  id="item" >
+				<option value="">Select page</option>
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select></label>
+			<label>Select a property of the item...
+			<select name="itemprop"  id="itemprop"  >
+				<option value="">Select property</option>
+				<option value="buttonTitle">buttonTitle</option>
+				<option value="chapter">chapter</option>
+				<option value="level">level</option>
+				<option value="type">type</option>
+				<option value="quiz">objective</option>
+				<option value="countscore">countscore</option>
+			</select></label>
+			<button type= "button" id= "getpaStateBtn" >Get pageArray Property from stored State</button></p>
+		</div> <!--pa-->	
+		
+		<div id="mv" class="submenu"  style="display:none;float:left;border:1px solid #CCCCCC;height:100px">
+		 	<select name="modulevars"  id="modulevars"  >
+		 		<option value="" selected>Select var</option>
+				<option>quizSetupDone</option>
+				<option>vrsnDone</option>
+				<option>justOpened</option>
+				<option>headerTitle</option>
+				<option>moduleType</option>
+				<option>recommendedMsg</option>
+				<option>requiredMsg</option>
+				<option>completedMsg</option>
+				<option>contentAuthEmail</option>
+			</select>
+			<button type= "button" id= "getmvStateBtn" >Get modulevars Property from stored State</button></p>
+	 	</div>	
+	 </div><!--box-->
+	 	<h2>Generate Statements (under construction!)</h2>	
+	<div class="box">
+		<label>Actor 
+			<input type="text" name="mbox" value="test@test.com" id="mbox">
+			<input type="text" name="name" value="Thomas Smith"  id="name">
+			</label>
+		<label>Verb
+			<div id="adlverbs"></div>
+		 </label>
+		 
+		<label>Object Type
+			<select id="objecttype" name="objecttype">
+				<option  value="" selected>Select an Object Type...</option>
+				<option value="activity">Activity</option>
+				<!--if selected, make id and definitions fields active-->
+				<option value="agent">Agent</option>
+				<option value="group">Group</option>
+				<!--https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#4142-when-the-object-is-an-agent-or-a-group-->
+				<option value="statementref">Statement Reference</option>
+				
+				<!--https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#statement-references-->
+				<option value="substatement">Sub-statement</option>
+				<!--https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#statement-references-->
+			</select>
+		 </label>
+	 
+		<div id="objectTypeActivity" name="objectTypeActivity" style="display:none" class="objectproperties"> 
+			<label>Activity id (IRI)<br/>
+		 		Enter an absolute URL that will serve as the unique identifier for this activity. It need not be resolvable.
+		 		 
+		 		<!--http://en.wikipedia.org/wiki/Internationalized_resource_identifier
+		     	https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#activity-id-requirements
+		  		-->
+		 		<input type="text" name="activityid1" id="activityid1"  value="http://mycompanycom/myactivity/" onfocus="$('#'+this.id).val('');">
+		 		 
+			</label>
+			<h4>Activity Definition</h4>
+				<!-- https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#activity-definition-->
+			<div class="box">
+			<label>Activity name
+				<input type = "text" name="actdefName" value="" id="actdefName" value=""></label>
+			<label>Activity description
+				<textarea rows="20" cols="80" name="actdefDescription" value="" id="actdefDescription" accept-charset="UTF-8"></textarea>
+			</label>
+			<label>Activity type
+			<!--http://www.adlnet.gov/expapi/activities/-->
+				<select id="activitytype">
+				<option value="" selected></option>
+				<option value="http://adlnet.gov/expapi/activities/assessment">assessment</option>
+				<option value="http://adlnet.gov/expapi/activities/course">course</option>
+				<option value="http://adlnet.gov/expapi/activities/file">file</option>
+				<option value="http://adlnet.gov/expapi/activities/interaction">interaction</option>
+				<option value="http://adlnet.gov/expapi/activities/lesson">lesson</option>
+				<option value="http://adlnet.gov/expapi/activities/link">link</option>
+				<option value="http://adlnet.gov/expapi/activities/media">media</option>
+				<option value="http://adlnet.gov/expapi/activities/meeting">meeting</option>
+				<option value="http://adlnet.gov/expapi/activities/module">module</option>
+				<option value="http://adlnet.gov/expapi/activities/objective">objective</option>
+				<option value="http://adlnet.gov/expapi/activities/performance">performance</option>
+				<option value="http://adlnet.gov/expapi/activities/simulation">simulation</option>
+				</select>
+			</label>
+			<label>More Info (URI) SHOULD resolve to a document human-readable information about the Activity, which MAY include a way to 'launch' the Activity.
+				<input type = text" name="actdefMoreInfo" value="" id="actdefMoreInfo" value="">
+			</label>
+			<!--Add later
+			Interaction Properties
+			extensions	-->
+			</div>
+		<button type= "button" id= "sendStatementBtn2" >Send Statement</button>
+	 	</div><!--end objectTypeActivity-->
+		<div id="objectTypeAgent" name="objectTypeAgent" style="display:none" class="objectproperties"> 
+		 <h3>Object type is Agent</h3>
+		 
+		<label>Email address 
+		<!--(this could actually be several other types of identifiers)-->
+			<input type="text" name="objTypeAgentMbox" value="test@test.com" id="objTypeAgentMbox">
+		</label>
+		<label>Name
+			<input type="text" name="objTypeAgentName" value=""  id="objTypeAgentName">
+		</label>
+		<button type= "button" id= "sendStatementBtn3" >Send Statement</button>
+		</div><!--end objectTypeAgent-->
+		
+		<div id="objectTypeGroup" name="objectTypeGroup" style="display:none" class="objectproperties"> 
+			 <h3>Object type is Group</h3>
+			<label>Group Name
+				<input type="text" name="objTypeGroupName" value=""  id="objTypeGroupName">
+			</label>
+			 <h4>Group Members</h4>
+				<label>Member email 1
+				<input type="text" name="membermbox1" value="member1@test.com" id="membermbox1"></label>
+				<label>Member name 1
+				<input type="text" name="membername1" value=""  id="membername1">Group Member1</label>
+				<label>Member email 2
+				<input type="text" name="membermbox2" value="member2@test.com" id="membermbox2"></label>
+				<label>Member name 2
+				<input type="text" name="membername2" value=""  id="membername2">Group Member2</label>
+				<label>Member email 3
+				<input type="text" name="membermbox3" value="member3@test.com" id="membermbox3"></label>
+				<label>Member name 3
+				<input type="text" name="membername3" value=""  id="membername3">Group Member3</label>
+			</label>
+			<button type= "button" id= "sendStatementBtn4" >Send Statement</button>	
+		</div><!--end objectTypeGroup-->
+		
+		<div id="objectTypeStatementref" name="objectTypeStatementref" style="display:none" class="objectproperties"> 
+		objectTypeStatementref
+		must be a valid statement UUID 
+		<input type="text" name="objTypeStRefID" value="f54d37d9-770f-4295-80e2-324a24062445" id="objTypeStRefID">
+		<button type= "button" id= "sendStatementBtn5" >Send Statement</button>
+		</div><!--end objectTypeStatementref-->
+		
+		<div id="objectTypeSubstatement" name="objectTypeSubstatement" style="display:none" class="objectproperties"> 
+		objectTypeSubstatement
+		<button type= "button" id= "sendStatementBtn6" >Send Statement</button>
+		</div><!--end objectTypeSubstatement-->
+		
+	
+	
+	</div>
+	
+	
+	
+	
+	<div id="result" style="border:1px solid #CCCCCC; margin-top:24px;height:auto;padding:6px;position:fixed;top:25%;left:650px;width:375px;"><h2>Results</h2></div>
+	</form>
+
+</body>
+<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js'></script>
+<script type="text/javascript" src="js/base64.js"></script>
+<script type="text/javascript" src="js/2.5.3-crypto-sha1.js"></script>
+<script type="text/javascript" src="js/verbs.js"></script>
+<script type="text/javascript" src="js/xapiwrapper.js"></script>
+<script type="text/javascript" src="js/config.js"></script>
+<script>
+	var teststmt = {"actor" : {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},
+            "verb"  : {"id" : "http://adlnet.gov/expapi/verbs/attempted",
+                       "display" : {"en-US" : "answered"}},
+            "object":{"id" : "http://adlnet.gov/expapi/activities/module/","objectType": "Activity"}};
+
+	$( document ).ready(function( ) {
+	// remove "selected" from any options that might already be selected
+	 	
+		var adl = ADL.XAPIWrapper;
+		adl.changeConfig(conf);
+		adl.debugLevel = "info";
+		//http://stackoverflow.com/questions/1414276/how-to-make-first-option-of-select-selected-with-jquery
+		// mark the first option as selected
+		$("select").val("");
+		$("objecttype").val("");
+	
+   		//$("#sendstatementBtn1").click( function(){ sendStatement( unescape( $('#statement').html() ) ); });
+   		//$("#sendstatementBtn1").click( function(){ sendStatement( $.parseJSON( unescape( $('#statement').html() ) ) ); });
+   		$("#sendStatementBtn0").click( function(){ sendStatement( $.parseJSON( unescape(cleanTextArea() ) ) ) } );//textarea output has to be cleaned up before sending or you get JSON errors
+   		$("#sendStatementBtn1").click( function(){ sendStatement(teststmt) });
+   		$("#sendStateBtn").click(     function(){ sendState('modulestate', $('#stateval').val() )  })
+    	$("#getStateBtn").click(      function(){ getState($('#stateid').val() ) });
+    	$("#getpaStateBtn").click(      function(){  getValuesFromState('pa')});
+    	$("#getmvStateBtn").click(      function(){ getValuesFromState('mv')  }); 
+    	$("#sendStatementBtn2").click( function(){ setStatementParams()} ); 
+    	$("#sendStatementBtn3").click( function(){ setStatementParams()} );
+    	$("#sendStatementBtn4").click( function(){ setStatementParams()} );
+    	$("#sendStatementBtn5").click( function(){ setStatementParams()} );  	
+    	$("#dataset").on("change", function (){
+			 $("div.submenu").hide();
+			 var targID  = $(this).val ();
+			 if(typeof targID!="undefined"){
+				var targID  = $(this).val ();
+				$('#'+targID).show();
+			 }	 
+			$('#dataset').blur();
+    	});  
+    	$("#objecttype").on("change",function(){
+    		 switch($("#objecttype").val()){
+			case "activity":
+				$(".objectproperties").hide();
+			  	$("div#objectTypeActivity").show();  
+			  	break;
+			case "agent":
+			  	$(".objectproperties").hide();
+			  	$("div#objectTypeAgent").show();
+			  	break;
+			case "group":
+			  	$(".objectproperties").hide();
+			  	$("div#objectTypeGroup").show();
+			  	break;
+			case "statementref":
+			  	$(".objectproperties").hide();
+			  	$("div#objectTypeStatementref").show();
+			  	break;
+			case "substatement":
+			  	$(".objectproperties").hide();
+			  	$("div#objectTypeSubstatement").show();
+			  	break;
+			default:
+			 // $(".objectproperties").hide();
+			  //	$("div#objectTypeActivity").show();  
+			}//end switch
+
+    		  		
+    	})  	
+    	populateVerbOptions()
+});//end ready function
+
+
+	function populateVerbOptions(){
+		var verboptions='<select name = "verbselector" id="verbselector">\n';
+		verboptions+=('<option value="" selected>Select a verb...</option>');		
+		$.each(ADL.verbs, function(key, val) {
+		//	console.log('key='+key+' val='+val);
+    	 	verboptions+=('<option value="' + val.id + '">' + val.display["en-US"] + '</option>\n'); 
+  		});	
+  		verboptions+=('</select>\n');
+  		$("#adlverbs").html(verboptions);
+	}//populateVerbOptions
+	
+ 	function cleanTextArea(){
+ 	 	var text = document.forms[0].statement.value;
+		text = text.replace(/\r?\n/g, '');
+	//	text = text.substring(1, text.length-1);
+		return text;
+		}
+	
+	function sendStatement(st){
+		ADL.XAPIWrapper.sendStatement(st, function(resp, obj){ 
+												$('#result').html(
+													
+													'<b>Statement:</b><br/>st.actor='+ st.actor+'<br/>st.id='+st.id+'st.object'+st.object+'<br/>st.verb='+st.verb+'<br/><b style="color:red">Response:</b><br/>obj.id='+obj.id+'<br/>resp.response=' +resp.response) 
+												}); 
+	}	
+	
+	function sendState(id,val){
+		ADL.XAPIWrapper.sendState("http://adlnet.gov/expapi/activities/module/", {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"}, id, null, val,'','',function(){ console.log('sendState Complete') });
+	}
+	 
+	function getState(id){
+		var respdata=	ADL.XAPIWrapper.getState("http://adlnet.gov/expapi/activities/module/",   {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},  id,'','',
+						function(resp, obj){ 
+										console.log('getState Complete'); 
+											$('#result').html( 'resp.response=' +resp.response) 
+										}); 		 	 
+		return respdata;
+	}
+			
+	function getValuesFromState(set){
+		if(set=='pa'){
+		 				//var dataset='pageArray';
+		 				var nn,pp;
+						var itm =( $("#item").val() !="" ? $("#item").val():0 );
+						var qq=($("#itemprop").val()!=""?$("#itemprop").val():null);
+						var respdata=	ADL.XAPIWrapper.getState("http://adlnet.gov/expapi/activities/module/", {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},  'modulestate','','', function(resp, obj){ 
+											console.log('getState Complete'); 
+											nn = JSON.parse(resp.response).pageArray[itm];
+											pp = nn[qq];
+											$('#result').html( 'pageArray['+itm+'].'+qq+'="' +pp +'"') 
+										}); 
+				}//end if
+				
+		else{		 
+						//var dataset= 'modulevars';
+						var itm=($("#modulevars").val()!=""?$("#modulevars").val():null);
+					 	var respdata=	ADL.XAPIWrapper.getState("http://adlnet.gov/expapi/activities/module/", {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},  'modulestate','','', function(resp, obj){ 
+											console.log('getState Complete'); 
+											nn = JSON.parse(resp.response).modulevars[itm];
+											 
+											$('#result').html( 'modulevars['+itm+']="' +nn+'"') 
+										}); 	
+		}
+		
+		 	 
+		return respdata;
+	}
+
+	function setStatementParams(){
+	/*
+	//Statement generator params
+	//need to decide where each value is going to come from: user input, launch string, LMS web services, etc. 	
+	//agent must use 1 of these 4 inverse identifiers:
+	//https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#details-3
+	//mbox	mailto IRI	The required format is "mailto:email address". 
+	//	Only email addresses that have only ever been and will ever be assigned to this Agent, but no others, should be used for this property and mbox_sha1sum.
+	//mbox_sha1sum	String	The SHA1 hash of a mailto IRI (i.e. the value of an mbox property). An LRS MAY include Agents with a matching hash when a request is based on an mbox.
+	//openid	URI	An openID that uniquely identifies the Agent.
+	//account	Object	A user account on an existing system e.g. an LMS or intranet.
+	*/	
+	var myagent = {"mbox" : "mailto:"+ $('#mbox').val(),"name": $('#name').val(),"objectType": "Agent"};
+	var vbselect = $("#verbselector");
+	var vb = typeof $("#verbselector").val()!="undefined"?$("#verbselector").val():"http://adlnet.gov/expapi/verbs/experienced";
+	console.log('vb='+vb);
+	//define the skeleton of the statement
+	var csParams = {actor:myagent, verb:{}, object:{}}
+	//start filling it in with parameters for each piece	 
+	csParams.verb.display = {},
+	csParams.verb.id=vb,
+	csParams.verb.display["en-US"]=$("option:selected", vbselect).text()!=""?$("option:selected", vbselect).text():"experienced";
+	//http://stackoverflow.com/a/9138615
+	switch( $("#objecttype").val() ){
+		case "activity": 
+				
+				csParams.object.id=$("#activityid").val(),
+				csParams.object.objectType="Activity",
+				csParams.object.definition = {},
+				csParams.object.definition["name"]={},
+				csParams.object.definition.description = {},
+				csParams.object.definition["name"]["en-US"]=$("#actdefName").val(),	
+				csParams.object.definition.description["en-US"]=$("#actdefDescription").val(),
+				csParams.object.definition.type=$("#activitytype").val();
+			  	break;
+		case "agent": 
+			csParams.object.id=$("#objTypeAgentMbox").val(),
+			csParams.object.objectType="Agent",
+			csParams.object.definition = {},
+			csParams.object.definition["name"]={},	
+			csParams.object.definition["name"]["en-US"]=$("#objTypeAgentName").val();		
+			break;
+		case "group": 
+			csParams.object.id=$("#objTypeGroupName").val(),
+			csParams.object.objectType="Group",
+			csParams.object.definition = {},
+			csParams.object.definition["name"]={},	
+			csParams.object.definition["name"]["en-US"]=$("#objTypeGroupName").val();
+			csParams.object.member={};//array of agent objects
+			break;
+		case "statementref":
+			csParams.object.id=$("#objTypeStRefID").val(),
+			csParams.object.objectType="StatementRef";
+			break; 
+		//case "substatement":
+		//not done yet
+		//break; 
+		default:
+			csParams.object.id="http://yourserver.com/defaultactivity/",
+			csParams.object.objectType="Activity",	
+			csParams.object.definition = {},
+			csParams.object.definition["name"]={},	
+			csParams.object.definition.description = {},	
+			csParams.object.definition["name"]["en-US"]="Default Activity Name",	
+			csParams.object.definition.description["en-US"]="Default Activity Description";
+	}//end switch
+
+    		  		
+      		  	
+	 generateStatement(csParams);
+}//end function setStatementParams()	  
+ 	 
+ 	function generateStatement(params){
+		var thejson = JSON.stringify(params);
+		if(testing){console.log(thejson);}
+		alert(thejson);
+		//sendStatement(params);
+	}	 
+
+var myprofile = {
+    "umid": "123456799",
+    "roles": [
+        "Nurse",
+        "isORstaff",
+        "patientCareArea",
+        "centralLineProc",
+        "isResearcher"
+    ]
+}
+ 	//generate a profile 
+	var profhash = adl.hash(JSON.stringify(myprofile)); //this is an md5 function used to doublecheck integrity of data
+	myprofile = myprofile["roles"].push("isEducator");
+	adl.sendAgentProfile(myagent, "roles", myprofile["roles"], profhash, null, function (err, resp, bdy) {
+    	if (err) {
+        		adl.log("error", "request error: " + err);
+    		} else {
+       			adl.log("info", "status: " + resp.statusCode);
+   			}
+	});
+	
+	
+ 	function sendAgentProfile(id, myprofile){
+		adl.sendAgentProfile(myagent, id, myprofile, null, "*", function (err, resp, bdy) {
+    	if (err) {
+        	adl.log("error", "request error: " + err);
+    		} else {
+       		adl.log("info", "status: " + resp.statusCode);
+   			}
+		});
+	} 
+	
+	
+	function expandtext(id){
+		$("#"+id).toggleClass("closed open"); 
+		$("#"+id).nextAll('textarea').eq(0).toggleClass("closed open");
+		 
+	}		
+ 	
+ 	
+</script>
+</html>
+
+
+ 

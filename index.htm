@@ -14,7 +14,8 @@
 	<form id="form1"  class="formular" style="left:20px;margin:0px;">
 		
 		<h2>Send Statement</h2>
-		<div class="box">	
+		<div class="box">
+		Paste your own pre-written statement into the box below and click Send Statement 1. 	
 		<p><a href="" id="toggle1" class="toggles closed" onclick="expandtext(this.id);return false;"></a>
 		<span>click to expand</span><textarea rows="10" cols="80" name="statement" value="x" id="statement" accept-charset="UTF-8" class="closed">
 		{"actor" : {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},
@@ -27,13 +28,13 @@
 		<label>Paste statement into textarea above  </label><button type= "button" id= "sendStatementBtn0">Send Statement 1</button></p>
 		
 		
-		<p><label>Send predefined hardcoded statement data </label><button type= "button" id= "sendStatementBtn1">Send Statement 2</button></p>
+		<p><label>Send example hardcoded statement ( </label><button type= "button" id= "sendStatementBtn1">Send Statement 2</button></p>
 	
 	</div><!--box-->
 
 <h2>Send State</h2>	
 	<div class="box">	
-
+	I've pre-populated this with example learning module State data, but you can paste in your own instead.
 		<p><a href="" id="toggle2" class="toggles closed" onclick="expandtext(this.id);return false;"></a>
 		<span>click to expand</span><textarea rows="10" cols="80" name="stateval" value="type a key:value pair" id="stateval" class="closed">
 	{
@@ -191,6 +192,7 @@
 	
 	<h2>Get State</h2>		
 	<div class="box">
+
 		<p>
 			<select name="stateid"   id="stateid">
 				<option value="">Pick a State id to retrieve</option>
@@ -257,6 +259,7 @@
 	 </div><!--box-->
 	 	<h2>Generate Statements (under construction!)</h2>	
 	<div class="box">
+	This currently displays but does not send the statements because I'm still working on it. Ultimately it will generate statements for all the different Object types.
 		<label>Actor 
 			<input type="text" name="mbox" value="test@test.com" id="mbox">
 			<input type="text" name="name" value="Thomas Smith"  id="name">
@@ -345,7 +348,11 @@
 				<input type="text" name="objTypeGroupName" value=""  id="objTypeGroupName">
 			</label>
 			 <h4>Group Members</h4>
-				<label>Member email 1
+			 
+			 <textarea name="groupmembers" id="groupmembers">{'mbox' : 'mailto:tom@example.com','name':'Tom Smith','objectType': 'Agent'},
+{'mbox' : 'mailto:john@example.com','name':'John Anderson','objectType': 'Agent'},
+{'mbox' : 'mailto:mary@example.com','name':'Mary Ryan','objectType': 'Agent'}</textarea>
+				<!--<label>Member email 1
 				<input type="text" name="membermbox1" value="member1@test.com" id="membermbox1"></label>
 				<label>Member name 1
 				<input type="text" name="membername1" value=""  id="membername1">Group Member1</label>
@@ -357,7 +364,7 @@
 				<input type="text" name="membermbox3" value="member3@test.com" id="membermbox3"></label>
 				<label>Member name 3
 				<input type="text" name="membername3" value=""  id="membername3">Group Member3</label>
-			</label>
+			</label>-->
 			<button type= "button" id= "sendStatementBtn4" >Send Statement</button>	
 		</div><!--end objectTypeGroup-->
 		
@@ -385,6 +392,7 @@
 
 </body>
 <script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js'></script>
+ 
 <script type="text/javascript" src="js/base64.js"></script>
 <script type="text/javascript" src="js/2.5.3-crypto-sha1.js"></script>
 <script type="text/javascript" src="js/verbs.js"></script>
@@ -409,7 +417,7 @@
 	
    		//$("#sendstatementBtn1").click( function(){ sendStatement( unescape( $('#statement').html() ) ); });
    		//$("#sendstatementBtn1").click( function(){ sendStatement( $.parseJSON( unescape( $('#statement').html() ) ) ); });
-   		$("#sendStatementBtn0").click( function(){ sendStatement( $.parseJSON( unescape(cleanTextArea() ) ) ) } );//textarea output has to be cleaned up before sending or you get JSON errors
+   		$("#sendStatementBtn0").click( function(){ sendStatement( $.parseJSON( unescape(cleanTextArea(document.forms[0].statement) ) ) ) } );//textarea output has to be cleaned up before sending or you get JSON errors
    		$("#sendStatementBtn1").click( function(){ sendStatement(teststmt) });
    		$("#sendStateBtn").click(     function(){ sendState('modulestate', $('#stateval').val() )  })
     	$("#getStateBtn").click(      function(){ getState($('#stateid').val() ) });
@@ -472,8 +480,8 @@
   		$("#adlverbs").html(verboptions);
 	}//populateVerbOptions
 	
- 	function cleanTextArea(){
- 	 	var text = document.forms[0].statement.value;
+ 	function cleanTextArea(txt){
+ 	 	var text = txt.value;
 		text = text.replace(/\r?\n/g, '');
 	//	text = text.substring(1, text.length-1);
 		return text;
@@ -481,9 +489,11 @@
 	
 	function sendStatement(st){
 		ADL.XAPIWrapper.sendStatement(st, function(resp, obj){ 
+													var json_text = JSON.stringify(st, null, 2);
 												$('#result').html(
-													
-													'<b>Statement:</b><br/>st.actor='+ st.actor+'<br/>st.id='+st.id+'st.object'+st.object+'<br/>st.verb='+st.verb+'<br/><b style="color:red">Response:</b><br/>obj.id='+obj.id+'<br/>resp.response=' +resp.response) 
+													 '<b>Statement:</b><br/>'+json_text + 
+
+													'<br/><br/> st.actor='+ st.actor+'<br/>st.id='+st.id+'st.object'+st.object+'<br/>st.verb='+st.verb+'<br/><b style="color:red">Response:</b><br/>obj.id='+obj.id+'<br/>resp.response=' +resp.response) 
 												}); 
 	}	
 	
@@ -577,7 +587,8 @@
 			csParams.object.definition = {},
 			csParams.object.definition["name"]={},	
 			csParams.object.definition["name"]["en-US"]=$("#objTypeGroupName").val();
-			csParams.object.member={};//array of agent objects
+			var groupmemberlist=unescape(cleanTextArea(document.getElementById("groupmembers")) );
+			csParams.object.member="["+groupmemberlist+"]";//array of agent objects
 			break;
 		case "statementref":
 			csParams.object.id=$("#objTypeStRefID").val(),
@@ -646,8 +657,9 @@ var myprofile = {
 		$("#"+id).nextAll('textarea').eq(0).toggleClass("closed open");
 		 
 	}		
- 	
- 	
+  
+	//http://zackpierce.github.io/xAPI-Validator-JS/
+	 		
 </script>
 </html>
 

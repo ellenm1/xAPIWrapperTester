@@ -32,7 +32,7 @@
 	
 	</div><!--box-->
 
-<h2>Send State</h2>	
+	<h2>Send State</h2>	
 	<div class="box">	
 	I've pre-populated this with example learning module State data, but you can paste in your own instead.
 		<p><a href="" id="toggle2" class="toggles closed" onclick="expandtext(this.id);return false;"></a>
@@ -205,7 +205,7 @@
 	</div><!--box-->
 	
 	
-		<h2>Get module-Specific values</h2>		
+	<h2>Get module-Specific values</h2>		
 	<div class="box" style="height:150px;">
 		<div id="mainmenu" style="float:left;border:1px solid #CCCCCC;margin-right:12px;padding:10px;height:100px"> 	
 				<label>Select data set to retrieve from<br/>State id = "modulestate"
@@ -261,7 +261,7 @@
 	<div class="box">
 	This currently displays but does not send the statements because I'm still working on it. Ultimately it will generate statements for all the different Object types.
 		<label>Actor 
-			<input type="text" name="mbox" value="test@test.com" id="mbox">
+			<input type="text" name="mbox" value="ellen3@example.com" id="mbox">
 			<input type="text" name="name" value="Thomas Smith"  id="name">
 			</label>
 		<label>Verb
@@ -352,19 +352,7 @@
 			 <textarea name="groupmembers" id="groupmembers">{'mbox' : 'mailto:tom@example.com','name':'Tom Smith','objectType': 'Agent'},
 {'mbox' : 'mailto:john@example.com','name':'John Anderson','objectType': 'Agent'},
 {'mbox' : 'mailto:mary@example.com','name':'Mary Ryan','objectType': 'Agent'}</textarea>
-				<!--<label>Member email 1
-				<input type="text" name="membermbox1" value="member1@test.com" id="membermbox1"></label>
-				<label>Member name 1
-				<input type="text" name="membername1" value=""  id="membername1">Group Member1</label>
-				<label>Member email 2
-				<input type="text" name="membermbox2" value="member2@test.com" id="membermbox2"></label>
-				<label>Member name 2
-				<input type="text" name="membername2" value=""  id="membername2">Group Member2</label>
-				<label>Member email 3
-				<input type="text" name="membermbox3" value="member3@test.com" id="membermbox3"></label>
-				<label>Member name 3
-				<input type="text" name="membername3" value=""  id="membername3">Group Member3</label>
-			</label>-->
+				
 			<button type= "button" id= "sendStatementBtn4" >Send Statement</button>	
 		</div><!--end objectTypeGroup-->
 		
@@ -384,15 +372,40 @@
 	
 	</div>
 	
-	
+	<h2>Send Agent Profile (under construction)</h2>
+	<div class="box">
+		<label>Agent (what agent are you creating a profile for?)
+			<input type="text" name="AgentProfile_mbox" value="ellen2@example.com" id="AgentProfile_mbox">
+			<input type="text" name="AgentProfile_name" value="Ellen M2"  id="AgentProfile_name">
+			</label>
+		<select id="theprofileid" onchange="checkIfOther(this.id)">
+		<option>umid</option>
+		<option>roles</option>
+		<option>accomplishments</option>
+		<option>accomplishments2</option>
+		<option>competencies</option>
+		<option value="other" >other</option>
+		</select>
+		<input type="text" id="theprofileid_other" value="" style="display:none">
+		<textarea id="agentProfile">
+			{"competencies":[
+								"competency 1",
+								"competency 2",
+								"competency 3",
+								"competency 4"
+			 ]}
+			
+			
+    	</textarea>
+    	<button type= "button" id="sendProfileBtn1" >Send Agent Profile</button>
+	</div>
 	
 	
 	<div id="result" style="border:1px solid #CCCCCC; margin-top:24px;height:auto;padding:6px;position:fixed;top:25%;left:650px;width:375px;"><h2>Results</h2></div>
 	</form>
 
 </body>
-<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js'></script>
- 
+<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js'></script> 
 <script type="text/javascript" src="js/base64.js"></script>
 <script type="text/javascript" src="js/2.5.3-crypto-sha1.js"></script>
 <script type="text/javascript" src="js/verbs.js"></script>
@@ -405,8 +418,6 @@
             "object":{"id" : "http://adlnet.gov/expapi/activities/module/","objectType": "Activity"}};
 
 	$( document ).ready(function( ) {
-	// remove "selected" from any options that might already be selected
-	 	
 		var adl = ADL.XAPIWrapper;
 		adl.changeConfig(conf);
 		adl.debugLevel = "info";
@@ -426,7 +437,9 @@
     	$("#sendStatementBtn2").click( function(){ setStatementParams()} ); 
     	$("#sendStatementBtn3").click( function(){ setStatementParams()} );
     	$("#sendStatementBtn4").click( function(){ setStatementParams()} );
-    	$("#sendStatementBtn5").click( function(){ setStatementParams()} );  	
+    	$("#sendStatementBtn5").click( function(){ setStatementParams()} );
+    	
+    	$("#sendProfileBtn1").click( function(){ sendAgentProfile();  });  	
     	$("#dataset").on("change", function (){
 			 $("div.submenu").hide();
 			 var targID  = $(this).val ();
@@ -619,44 +632,105 @@
 		//sendStatement(params);
 	}	 
 
-var myprofile = {
-    "umid": "123456799",
-    "roles": [
-        "Nurse",
-        "isORstaff",
-        "patientCareArea",
-        "centralLineProc",
-        "isResearcher"
-    ]
-}
- 	//generate a profile 
-	var profhash = adl.hash(JSON.stringify(myprofile)); //this is an md5 function used to doublecheck integrity of data
-	myprofile = myprofile["roles"].push("isEducator");
-	adl.sendAgentProfile(myagent, "roles", myprofile["roles"], profhash, null, function (err, resp, bdy) {
-    	if (err) {
-        		adl.log("error", "request error: " + err);
-    		} else {
-       			adl.log("info", "status: " + resp.statusCode);
-   			}
-	});
+	/*
+Send Agent Profile
+function sendAgentProfile(agent, profileid, profileval, matchHash, noneMatchHash, callback)
+Sends an Agent Profile to the LRS.
+Parameters: agent - the agent this profile is related to profileid - the id you want associated with this profile 
+profileval - the profile 
+matchHash - the hash of the profile to replace or to replace any 
+noneMatchHash - the hash of the current profile or to indicate no previous profile 
+callback - function to process after request has completed.
+Parameters passed to callback: error - an error message if something went wrong
+response - the response object body - the body of the response if there is one
+
+Get Agent Profile
+function getAgentProfile(agent, profileid, since, callback)
+Gets an Agent Profile from the LRS.
+Parameters: 
+	agent - the agent associated with this profile 
+	profileid - (optional - if not included, the response will be a list of profileids associated with the agent) the id of the profile 
+	since - date object telling the LRS to return objects newer than the date supplied 
+	callback - function to process after request has completed.
+Parameters passed to callback: 
+	error - an error message if something went wrong
+	response - the response object body - the body of the response if there is one	
+	*/
 	
+ 	function sendAgentProfile(){ //use for first-time send of a particular piece of the profile - "id", such as "roles", "accomplishments", etc.
+ 		//check current values of required params.
+ 		var theprofile = unescape(cleanTextArea(document.getElementById("agentProfile")) ); 
+ 		var theagent = {"mbox" : "mailto:"+ $('#AgentProfile_mbox').val(),"name": $('#AgentProfile_name').val(),"objectType": "Agent"};
+    	//var theagent = unescape(cleanTextArea(document.getElementById("theagent")) );
+    	//var theagent = $.parseJSON( unescape(cleanTextArea( document.getElementById("theagent") ) ) ) ;
+    	//var myagent = {"mbox" : "mailto:"+ $('#mbox').val(),"name": $('#name').val(),"objectType": "Agent"};
+    	//check if something is typed into the Other box? If so use it.
+    	var theprofileid = ($("theprofileid_other").val()!=="")?$("theprofileid_other").val():$("#theprofileid").val();
+    	//note that this could still="" if they did not select from the dropdown so we have to set a default value of "roles" next.
+    	theprofileid = ((theprofileid!="")&&(typeof theprofileid!="undefined"))?theprofileid:"competencies";
+    	//var theprofileid ="";
+ 		
+ 		
+ 		//first, check if this profile segment exists! if it does, then use update instead.
+ 		
+ 		adl.getAgentProfile(theagent, theprofileid, null, function (err, resp, bdy) {
+    		if (err) {
+       			adl.log("error", "request error: " + err);
+       			if((typeof resp == "undefined")||(resp==null)||(resp=="[undefined]")){ //if it comes back undefined, it doesn't exist yet. just send profile
+       				adl.sendAgentProfile(theagent, theprofileid, theprofile, null, "*", function (err, resp, bdy) {
+    					if (err) {
+        						adl.log("error", "request error: " + err);
+        						$('#result').html( '<b>Request Error:</b><br/>'+err+' Response'+resp);
+    							} else {
+       								adl.log("info", "status: " + resp.statusCode);
+       								$('#result').html( '<b>Status:</b><br/>'+resp.statusCode); 
+   								}
+							});	
+       			}
+				} else {
+						adl.log("info", "profile: " + bdy);
+						//it does exist, so create hash and update profile with new data
+						var profhash = adl.hash(JSON.stringify(bdy)); //this is an md5 function used to doublecheck integrity of data
+						adl.sendAgentProfile(theagent, theprofileid, theprofile[theprofileid], profhash, null, function (err, resp, bdy) {
+							if (err) {
+									adl.log("error", "request error: " + err);
+							} else {
+									adl.log("info", "status: " + resp.statusCode);
+							}
+						});//end adl.sendAgentProfile
+				}//end else
+		});//end adl.getAgentProfile
+		   	
+
+	} //end function sendAgentProfile()
+		
 	
- 	function sendAgentProfile(id, myprofile){
-		adl.sendAgentProfile(myagent, id, myprofile, null, "*", function (err, resp, bdy) {
-    	if (err) {
-        	adl.log("error", "request error: " + err);
-    		} else {
-       		adl.log("info", "status: " + resp.statusCode);
-   			}
+	function updateAgentProfile(){
+		//update a profile 
+		var profhash = adl.hash(JSON.stringify(theprofile)); //this is an md5 function used to doublecheck integrity of data
+		theprofile = theprofile["roles"].push("isEducator");
+		adl.sendAgentProfile(theagent, "roles", theprofile["roles"], profhash, null, function (err, resp, bdy) {
+			if (err) {
+					adl.log("error", "request error: " + err);
+				} else {
+					adl.log("info", "status: " + resp.statusCode);
+				}
 		});
-	} 
+	}		
 	
-	
+	function getAgentProfile(){
+	}
 	function expandtext(id){
 		$("#"+id).toggleClass("closed open"); 
 		$("#"+id).nextAll('textarea').eq(0).toggleClass("closed open");
 		 
-	}		
+	}	
+	
+	function checkIfOther(id){
+		if( $('#'+id).val() == "other"){
+			$('#'+id).hide();$('#'+id+'_other').show();
+		}
+	}	
   
 	//http://zackpierce.github.io/xAPI-Validator-JS/
 	 		

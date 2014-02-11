@@ -10,30 +10,341 @@
 	<!--<script src="js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>-->
 </head>
-<body>
-	<form id="form1"  class="formular" style="left:20px;margin:0px;">
+<body onload="scrollTo('top')">
+	<form id="form1"  class="formular" style="left:20px;margin:0px;padding-top:6px;">
 		
-		<h2>Send Statement</h2>
-		<div class="box">
+
+
+	 <!--STATEMENT GENERATOR-->
+	<h2>Generate Statements <span style="font-size:12px;">(under construction!)</span><a href="#" id="statementGeneratorToggle" class="toggleLink" onclick="return false;">show/hide</a></h2>	
+	<div class="box" id="statementGeneratorInputs" style="">
+	This currently displays but <u>does not send</u> statements because it is still changing frequently. Ultimately it will generate statements for all the different Object types. If you want to send your statement, copy it and paste it into the SendStatement box at top.
+		<div id="SG_actor" class="SG_statementProperties box">
+			<h3>I. Actor <span class="required">Required</span></h2>
+			<label>Email address <span class="required">Required</span>
+			<input type="text" name="mbox" value="ellen3@example.com" id="mbox">
+			</label>
+			<label>Full Name <span class="required">Required</span>
+			<input type="text" name="name" value="Thomas Smith"  id="name">
+			</label>
+		</div>
+		<div id="SG_verb"  class="SG_statementProperties box">
+			<label><h3>II. Verb <span class="required">Required</span></h3>
+				<div id="adlverbs"></div>
+			 </label>
+		 </div>
+		<div id="SG_object" class="SG_statementProperties box"> 
+			<a name="obj"></a><h3>III. Object</h3>
+			<label>Object Type <span class="required">Required</span>
+				<select id="objecttype" name="objecttype">
+				<option  value="" selected>Select an Object Type...</option>
+				<option value="activity">Activity</option>
+				<!--if selected, make id and definitions fields active-->
+				<option value="agent">Agent</option>
+				<option value="group">Group</option>
+				<!--https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#4142-when-the-object-is-an-agent-or-a-group-->
+				<option value="statementref">Statement Reference</option>
+				
+				<!--https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#statement-references-->
+				<option value="substatement">Sub-statement</option>
+				<!--https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#statement-references-->
+			</select>
+		 	</label>
+	 
+			<div id="objectTypeActivity" name="objectTypeActivity" style="display:none" class="objectproperties"> 
+				<label>Activity id (IRI)<br/>
+		 		Enter an absolute URL that will serve as the unique identifier for this activity. It need not be resolvable.
+		 		 
+		 		<!--http://en.wikipedia.org/wiki/Internationalized_resource_identifier
+		     	https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#activity-id-requirements
+		  		-->
+		 		<input type="text" name="activityid1" id="activityid1"  value="http://mycompanycom/myactivity/" onfocus="$('#'+this.id).val('');">
+		 		 
+				</label>
+				<h4>Activity Definition <span class="optional">Optional</span></h4>
+					<!-- https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#activity-definition-->
+				<div class="box" id="activityDefinition">
+				<label>Activity name
+					<input type = "text" name="actDef_Name" id="actDef_Name" value="Fire Safety Quiz"></label>
+				<label>Activity description
+					<textarea rows="20" cols="80" name="actDef_Description" value="" id="actDef_Description" accept-charset="UTF-8"></textarea>
+				</label>
+				<label>Activity type
+				<!--http://www.adlnet.gov/expapi/activities/-->
+					<a name="acttype"></a><select id="actDef_activitytype">
+					<option value="" selected>Select an Activity type</option>
+					<option value="http://adlnet.gov/expapi/activities/assessment">assessment</option>
+					<option value="http://adlnet.gov/expapi/activities/course">course</option>
+					<option value="http://adlnet.gov/expapi/activities/file">file</option>
+					<option value="http://adlnet.gov/expapi/activities/interaction">interaction</option>
+					<option value="http://adlnet.gov/expapi/activities/lesson">lesson</option>
+					<option value="http://adlnet.gov/expapi/activities/link">link</option>
+					<option value="http://adlnet.gov/expapi/activities/media">media</option>
+					<option value="http://adlnet.gov/expapi/activities/meeting">meeting</option>
+					<option value="http://adlnet.gov/expapi/activities/module">module</option>
+					<option value="http://adlnet.gov/expapi/activities/objective">objective</option>
+					<option value="http://adlnet.gov/expapi/activities/performance">performance</option>
+					<option value="http://adlnet.gov/expapi/activities/simulation">simulation</option>
+					</select>
+				</label>
+				<label>More Info <span class="optional">(URI) SHOULD resolve to a document with human-readable information about the Activity, which MAY include a way to 'launch' the Activity.</span>
+					<input type = text" name="actDef_MoreInfo" value="" id="actDef_MoreInfo" value="">
+				</label>
+				<div id="actDef_InteractionProperties" class="box" style="display:none;">
+				<a name="intprop"></a><h3>Interaction Properties <span class="optional">(only used when the activityType is Interaction)</span></h3>
+				<label>Interaction Type
+					<select id="actDef_interactionType">
+					<option value="">Select an Interaction type</option>
+					<option value="true-false">true-false</option>
+					<option value="choice">choice</option>
+					<option value="sequencing">sequencing</option>
+					<option value="likert">likert</option>
+					<option value="matching">matching</option>
+					<option value="performance">performance</option>
+					<option value="fill-in">fill-in</option>
+					<option value="long-fill-in">long-fill-in</option>
+					<option value="numeric">numeric</option>
+					<option value="performance">performance</option>
+					<option value="other">other</option>
+					</select>
+				</label>
+				
+				
+				<div id="intComponents" class="box" display:none;"><h4>Interaction components</h4>
+					<div id="actDef_comp_choice" style="display:none">
+						<h5>Choices <a href="#" id="addChoice" onclick="return false;" class="add">Add another?</a></h5>
+						<div id="actDef_compChoice01">
+							<label>Choice ID 01 <span class="optional">(e.g. "A","01","golf","blue",etc. - a short unique ID, no spaces)</span><input id="actDef_compChoiceID01" type="text"></label>
+							<label>Choice Description 01 <span class="optional">(The full text of the choice or its description. English only for now)</span><input id="actDef_compChoiceDesc01" type="text"></label>
+						</div>
+					</div><!--end actDef_choice-->
+					 
+					<div id="actDef_comp_scale" style="display:none"><h5>(Likert) scale<a href="#" id="addScale" onclick="return false" class="add">Add another?</a></h5>
+						<label>Likert Scale ID 01(ex: "1", "likert_01", "a",etc. just an id that is unique for the interaction.)  
+							<input id="actDef_compScaleID01" type="text">
+							</label>
+						<label>Description 01 <span class="optional">(The full text shown to the user of the scale item e.g. "strongly","not at all", "n/a", etc. English only for now)</span>
+							<input id="actDef_compScaleDesc01" type="text">
+						</label>
+					</div><!--end actDef_scale-->
+					
+					<div id="actDef_comp_source" style="display:none"><h5>(Matching) Source <a href="#" id="addMatch" onclick="return false" class="add">Add another?</a></h5>
+						<span class="optional">There should be one target for each source</span>
+						<div id="actDef_compSource01">
+							<label>Source ID 01 
+								<input id="actDef_compSourceID01" type="text"></label>
+							<label>Source Description 01 <span class="optional">(English only)</span>
+								<input id="actDef_compSourceDesc01" type="text">
+							</label>					
+						</div><!--end actDef_source01-->
+						<!--need add more func-->
+ 					</div><!--end actDef_source-->
+					<div id="actDef_comp_target" style="display:none"><h5>(Matching) Target </h5>
+					<span class="optional">If you have a need for one to many or many to one matching, you'll have to edit this part of the statement manually.</span>
+					<div id="actDef_compTarget01">
+					<label>Target ID 01
+							<input id="actDef_compTargetID01" type="text"></label>
+						<label>Target Description 01 <span class="optional">(english)</span>
+							<input id="actDef_compTargetDesc01" type="text">
+						</label>
+						</div><!--end actDef_target01-->
+						<!--need add more func-->
+							<!--add a target for each source ?-->
+					</div><!--end actDef_target-->
+					<div id="actDef_comp_steps" style="display:none">Steps <a href="#" id="addStep" onclick="return false;">Add another?</a>
+						<label>Step ID 01
+							<input id="actDef_compStepsID01" type="text">
+						</label>
+						<label>Step Description 01<span class="optional">(english)</span>
+							<input id="actDef_compStepsDesc01" type="text">
+						</label>
+					</div><!--end actDef_steps-->
+				  
+					 </div><!--end intComponents-->
+					 
+					 <label>Correct Responses Pattern  <span class="optional">Optional</span> <a href="#" id="showCorrectResponsePatternEx" onclick="return false;">Examples</a>
+					<textarea id="actDef_intRespPattern"></textarea>
+				</label>
+				<label>Extensions <span class="optional">Optional: Object. Map of other properties as needed.</span>
+				<textarea id="actDef_interactionExtensions"></textarea>
+				</label>
+			</div><!--end actDef_InteractionProperties-->
+		
+				</div><!--end activityDefinition-->
+		 
+			</div><!--end objectTypeActivity-->
+			<div id="objectTypeAgent" name="objectTypeAgent" style="display:none" class="objectproperties"> 
+			 <h3>Object type is Agent</h3>
+		 
+			<label>Email address 
+			<!--(this could actually be several other types of identifiers)-->
+				<input type="text" name="objTypeAgentMbox" value="test@test.com" id="objTypeAgentMbox">
+			</label>
+			<label>Name
+				<input type="text" name="objTypeAgentName" value=""  id="objTypeAgentName">
+			</label>
+			<!--<button type= "button" id= "sendStatementBtn3" >Send Statement</button>-->
+			</div><!--end objectTypeAgent-->
+		
+			<div id="objectTypeGroup" name="objectTypeGroup" style="display:none" class="objectproperties"> 
+				 <h3>Object type is Group</h3>
+				<label>Group Name
+					<input type="text" name="objTypeGroupName" value=""  id="objTypeGroupName">
+				</label>
+			 
+				 <h4>Group Members</h4>			 
+				 <textarea name="groupmembers" id="groupmembers">{'mbox' : 'mailto:tom@example.com','name':'Tom Smith','objectType': 'Agent'},
+	{'mbox' : 'mailto:john@example.com','name':'John Anderson','objectType': 'Agent'},
+	{'mbox' : 'mailto:mary@example.com','name':'Mary Ryan','objectType': 'Agent'}</textarea>
+				
+			
+			</div><!--end objectTypeGroup-->
+		
+			<div id="objectTypeStatementref" name="objectTypeStatementref" style="display:none" class="objectproperties"> 
+			objectTypeStatementref
+			must be a valid statement UUID 
+			<input type="text" name="objTypeStRefID" value="f54d37d9-770f-4295-80e2-324a24062445" id="objTypeStRefID">
+			<!--<button type= "button" id= "sendStatementBtn5" >Send Statement</button>-->
+			</div><!--end objectTypeStatementref-->
+		
+			<div id="objectTypeSubstatement" name="objectTypeSubstatement" style="display:none" class="objectproperties"> 
+			objectTypeSubstatement
+			<button type= "button" id= "sendStatementBtn6" >Send Statement</button>
+			</div><!--end objectTypeSubstatement-->
+	</div><!--end SG_object-->
+		
+	<div id="SG_result"  class="SG_statementProperties box">
+	
+		<h3>IV. Result <span class="optional">Optional</span><a href="#" id="resultToggle" class="toggleLink" onclick="return false;">show</a></h3>
+	
+		<div id="SG_resultinputs" style="display:none;">
+		<div>Note: this doesn't validate yet before calculating score.scaled. Minimum score should be less than maximum score!</div>
+		<label>Raw Score (actual point value of score achieved, not percentage)<span class="optional">Optional</span>
+			<input type="number" name="SG_result_score_rawscore" id="SG_result_rawscore" maxlength="4" size="4"></label>
+		<label>Minimum Score (actual point value, not percentage) <span class="optional">Optional</span>
+			<input type="number" name="SG_result_score_minscore" id="SG_result_minscore" maxlength="4" size="4"></label>
+		<label>Maximum Score (actual point value, not percentage) <span class="optional">Optional</span>
+			<input type="number" name="SG_result_score_maxscore" id="SG_result_maxscore" maxlength="4" size="4"></label>
+		<label>Success <span class="optional">Optional</span>
+			<select name="SG_result_success1" id="SG_result_success1">
+				<option value="">Select an option</option>
+				<option value="true">true</option>
+				<option value="false">false</option>
+			</select><label>
+		<label>Completion <span class="optional">Optional</span>
+			<select name="SG_result_completion" id="SG_result_completion">
+				<option value="">Select an option</option>
+				<option value="true">true</option>
+				<option value="false">false</option>
+			</select>
+		<label>
+		<label>Response <span class="optional">Optional</span>
+			<textarea rows="4" cols="80" name="SG_result_response" id="SG_result_response" accept-charset="UTF-8"></textarea>
+		</label>
+		<label>Duration <span class="optional">Optional <a href="https://en.wikipedia.org/wiki/ISO_8601#Durations" target="_blank">"P23DT23H","P4Y","PT1M"</a></span>
+			<input type="text" value="" name="SG_result_duration" id="SG_result_duration">
+		</label>	
+		<label>Extensions <span class="optional">Optional Must be an object</span> 
+			<textarea rows="4" cols="80" name="SG_result_extensions" id="SG_result_extensions" accept-charset="UTF-8"></textarea>
+		</label>
+				<!--	
+					Score {scaled:.9, raw:9,min:0,max:10}
+					success:true;
+					completion:true
+					response:string
+					duration:see below
+					extensions: object
+	
+				http://www.ostyn.com/blog/2006/09/scoring-in-scorm.html	
+					What I would do in SCORM 1.2 with the example above is report min as 0, max as 100, and raw as 80.77
+				This is calculated by scaling to 0..100 with the formulas
+
+				cmi.core.score.min = 0 
+
+				cmi.core.score.max = 100 
+
+				cmi.core.score.raw = ((internal_raw - internal_min)* (100 / (internal_max - internal_min)))
+
+				where internal_raw = 21, internal_min = 0, and internal_max = 26.
+
+				Going to SCORM 2004, the formula for the new cmi.score.scaled is even simpler:
+				cmi.score.scaled = ((internal_raw - internal_min)/(internal_max - internal_min))
+
+	
+					https://en.wikipedia.org/wiki/ISO_8601#Durations
+				"P23DT23H" and "P4Y" are both acceptable duration representations.
+
+				To resolve ambiguity, "P1M" is a one-month duration and "PT1M" is a one-minute duration (note the time designator, T, that precedes the time value). The smallest value used may also have a decimal fraction, as in "P0.5Y" to indicate half a year. This decimal fraction may be specified with either a comma or a full stop, as in "P0,5Y" or "P0.5Y". The standard does not prohibit date and time values in a duration representation from exceeding their "carry over points" except as noted below. Thus, "PT36H" could be used as well as "P1DT12H" for representing the same duration.	
+					For example, "P3Y6M4DT12H30M5S" represents a duration of "three years, six months, four days, twelve hours, thirty minutes, and five seconds".
+					duration:P is the duration designator (historically called "period") placed at the start of the duration representation.
+				Y is the year designator that follows the value for the number of years.
+				M is the month designator that follows the value for the number of months.
+				W is the week designator that follows the value for the number of weeks.
+				D is the day designator that follows the value for the number of days.
+				T is the time designator that precedes the time components of the representation.
+				H is the hour designator that follows the value for the number of hours.
+				M is the minute designator that follows the value for the number of minutes.
+				S is the second designator that follows the value for the number of seconds.-->
+		</div><!--end resultinputs-->
+	</div><!--end result-->
+	<div id="context">
+	
+	
+	
+	</div><!--end context-->
+	
+	<div id="timestamp">
+	
+	
+	
+	</div><!--end timestamp-->
+	
+	<div id="authority">
+	
+	
+	
+	</div><!--end authority-->
+	
+	<div id="version">
+	
+	
+	
+	</div><!--end version-->
+	
+	<div id="attachments">
+	
+	
+	
+	</div><!--end attachments-->
+	
+	<div id="dataconstraints">
+	
+	
+	
+	</div><!--end dataconstraints-->
+	
+	<button type= "button" id= "sendStatementBtn2" >Send Statement</button>	
+	</div><!--end Statement Generator-->
+	
+	
+	<a name="sendstatementfreeform"></a><h2 style="">Send Statement<a href="#" id="sendStatementToggle" class="toggleLink" onclick="return false;">show</a></h2>
+	<div class="box" id="sendStatementInputs" style="display:none;">
 		Paste your own pre-written statement into the box below and click Send Statement 1. 	
 		<p><a href="" id="toggle1" class="toggles closed" onclick="expandtext(this.id);return false;"></a>
 		<span>click to expand</span><textarea rows="10" cols="80" name="statement" value="x" id="statement" accept-charset="UTF-8" class="closed">
-		{"actor" : {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},
+		{"actor" : {"mbox" : "mailto:joe@example.com","name":"Joe XAPIWrapperTester","objectType": "Agent"},
             "verb"  : {"id" : "http://adlnet.gov/expapi/verbs/attempted",
-                       "display" : {"en-US" : "answered"}},
+                       "display" : {"en-US" : "attempted"}},
             "object":{"id" : "http://adlnet.gov/expapi/activities/module/","objectType": "Activity"}}
-</textarea>
-		
-		
+		</textarea>
 		<label>Paste statement into textarea above  </label><button type= "button" id= "sendStatementBtn0">Send Statement 1</button></p>
-		
-		
-		<p><label>Send example hardcoded statement ( </label><button type= "button" id= "sendStatementBtn1">Send Statement 2</button></p>
+		<p><label>Send hardcoded example statement  </label><button type= "button" id= "sendStatementBtn1">Send Statement 2</button></p>
 	
 	</div><!--box-->
 
-	<h2>Send State</h2>	
-	<div class="box">	
+<!--**************************************************************-->	
+	<a name="sendstate"></a><h2>Send State<a href="#" id="sendStateToggle" class="toggleLink" onclick="return false;">show</a></h2>	
+	<div class="box" id="sendStateInputs" style="display:none;">	
 	I've pre-populated this with example learning module State data, but you can paste in your own instead.
 		<p><a href="" id="toggle2" class="toggles closed" onclick="expandtext(this.id);return false;"></a>
 		<span>click to expand</span><textarea rows="10" cols="80" name="stateval" value="type a key:value pair" id="stateval" class="closed">
@@ -189,9 +500,9 @@
 			<button type= "button" id= "sendStateBtn" >Send Module State</button>
 		</p>
 	</div><!--box-->
-	
-	<h2>Get State</h2>		
-	<div class="box">
+<!--**************************************************************-->	
+	<h2>Get State<a href="#" id="getStateToggle" class="toggleLink" onclick="return false;">show</a></h2>		
+	<div class="box" id="getStateInputs" style="display:none;">
 
 		<p>
 			<select name="stateid"   id="stateid">
@@ -204,9 +515,9 @@
 		</p>
 	</div><!--box-->
 	
-	
-	<h2>Get module-Specific values</h2>		
-	<div class="box" style="height:150px;">
+<!--**************************************************************-->	
+	<h2>Get module-Specific values<a href="#" id="getModuleSpecificToggle" class="toggleLink" onclick="return false;">show</a></h2>		
+	<div class="box"   id="getModuleSpecificInputs" style="height:150px;display:none;">
 		<div id="mainmenu" style="float:left;border:1px solid #CCCCCC;margin-right:12px;padding:10px;height:100px"> 	
 				<label>Select data set to retrieve from<br/>State id = "modulestate"
 					<select name="dataset" id="dataset">
@@ -257,123 +568,11 @@
 			<button type= "button" id= "getmvStateBtn" >Get modulevars Property from stored State</button></p>
 	 	</div>	
 	 </div><!--box-->
-	 	<h2>Generate Statements (under construction!)</h2>	
-	<div class="box">
-	This currently displays but does not send the statements because I'm still working on it. Ultimately it will generate statements for all the different Object types.
-		<label>Actor 
-			<input type="text" name="mbox" value="ellen3@example.com" id="mbox">
-			<input type="text" name="name" value="Thomas Smith"  id="name">
-			</label>
-		<label>Verb
-			<div id="adlverbs"></div>
-		 </label>
-		 
-		<label>Object Type
-			<select id="objecttype" name="objecttype">
-				<option  value="" selected>Select an Object Type...</option>
-				<option value="activity">Activity</option>
-				<!--if selected, make id and definitions fields active-->
-				<option value="agent">Agent</option>
-				<option value="group">Group</option>
-				<!--https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#4142-when-the-object-is-an-agent-or-a-group-->
-				<option value="statementref">Statement Reference</option>
-				
-				<!--https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#statement-references-->
-				<option value="substatement">Sub-statement</option>
-				<!--https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#statement-references-->
-			</select>
-		 </label>
 	 
-		<div id="objectTypeActivity" name="objectTypeActivity" style="display:none" class="objectproperties"> 
-			<label>Activity id (IRI)<br/>
-		 		Enter an absolute URL that will serve as the unique identifier for this activity. It need not be resolvable.
-		 		 
-		 		<!--http://en.wikipedia.org/wiki/Internationalized_resource_identifier
-		     	https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#activity-id-requirements
-		  		-->
-		 		<input type="text" name="activityid1" id="activityid1"  value="http://mycompanycom/myactivity/" onfocus="$('#'+this.id).val('');">
-		 		 
-			</label>
-			<h4>Activity Definition</h4>
-				<!-- https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#activity-definition-->
-			<div class="box">
-			<label>Activity name
-				<input type = "text" name="actdefName" value="" id="actdefName" value=""></label>
-			<label>Activity description
-				<textarea rows="20" cols="80" name="actdefDescription" value="" id="actdefDescription" accept-charset="UTF-8"></textarea>
-			</label>
-			<label>Activity type
-			<!--http://www.adlnet.gov/expapi/activities/-->
-				<select id="activitytype">
-				<option value="" selected></option>
-				<option value="http://adlnet.gov/expapi/activities/assessment">assessment</option>
-				<option value="http://adlnet.gov/expapi/activities/course">course</option>
-				<option value="http://adlnet.gov/expapi/activities/file">file</option>
-				<option value="http://adlnet.gov/expapi/activities/interaction">interaction</option>
-				<option value="http://adlnet.gov/expapi/activities/lesson">lesson</option>
-				<option value="http://adlnet.gov/expapi/activities/link">link</option>
-				<option value="http://adlnet.gov/expapi/activities/media">media</option>
-				<option value="http://adlnet.gov/expapi/activities/meeting">meeting</option>
-				<option value="http://adlnet.gov/expapi/activities/module">module</option>
-				<option value="http://adlnet.gov/expapi/activities/objective">objective</option>
-				<option value="http://adlnet.gov/expapi/activities/performance">performance</option>
-				<option value="http://adlnet.gov/expapi/activities/simulation">simulation</option>
-				</select>
-			</label>
-			<label>More Info (URI) SHOULD resolve to a document human-readable information about the Activity, which MAY include a way to 'launch' the Activity.
-				<input type = text" name="actdefMoreInfo" value="" id="actdefMoreInfo" value="">
-			</label>
-			<!--Add later
-			Interaction Properties
-			extensions	-->
-			</div>
-		<button type= "button" id= "sendStatementBtn2" >Send Statement</button>
-	 	</div><!--end objectTypeActivity-->
-		<div id="objectTypeAgent" name="objectTypeAgent" style="display:none" class="objectproperties"> 
-		 <h3>Object type is Agent</h3>
-		 
-		<label>Email address 
-		<!--(this could actually be several other types of identifiers)-->
-			<input type="text" name="objTypeAgentMbox" value="test@test.com" id="objTypeAgentMbox">
-		</label>
-		<label>Name
-			<input type="text" name="objTypeAgentName" value=""  id="objTypeAgentName">
-		</label>
-		<button type= "button" id= "sendStatementBtn3" >Send Statement</button>
-		</div><!--end objectTypeAgent-->
-		
-		<div id="objectTypeGroup" name="objectTypeGroup" style="display:none" class="objectproperties"> 
-			 <h3>Object type is Group</h3>
-			<label>Group Name
-				<input type="text" name="objTypeGroupName" value=""  id="objTypeGroupName">
-			</label>
-			 <h4>Group Members</h4>
-			 
-			 <textarea name="groupmembers" id="groupmembers">{'mbox' : 'mailto:tom@example.com','name':'Tom Smith','objectType': 'Agent'},
-{'mbox' : 'mailto:john@example.com','name':'John Anderson','objectType': 'Agent'},
-{'mbox' : 'mailto:mary@example.com','name':'Mary Ryan','objectType': 'Agent'}</textarea>
-				
-			<button type= "button" id= "sendStatementBtn4" >Send Statement</button>	
-		</div><!--end objectTypeGroup-->
-		
-		<div id="objectTypeStatementref" name="objectTypeStatementref" style="display:none" class="objectproperties"> 
-		objectTypeStatementref
-		must be a valid statement UUID 
-		<input type="text" name="objTypeStRefID" value="f54d37d9-770f-4295-80e2-324a24062445" id="objTypeStRefID">
-		<button type= "button" id= "sendStatementBtn5" >Send Statement</button>
-		</div><!--end objectTypeStatementref-->
-		
-		<div id="objectTypeSubstatement" name="objectTypeSubstatement" style="display:none" class="objectproperties"> 
-		objectTypeSubstatement
-		<button type= "button" id= "sendStatementBtn6" >Send Statement</button>
-		</div><!--end objectTypeSubstatement-->
-		
+<!--**************************************************************-->	 
 	
-	
-	</div>
-	
-	<h2>Send Agent Profile (under construction)</h2>
-	<div class="box">
+	<h2>Send Agent Profile (under construction) <a href="#" id="sendAgentProfileToggle" class="toggleLink" onclick="return false;">show</a></h2>
+	<div class="box" id="sendAgentProfileInputs" style="display:none;">
 		<label>Agent (what agent are you creating a profile for?)
 			<input type="text" name="AgentProfile_mbox" value="ellen2@example.com" id="AgentProfile_mbox">
 			<input type="text" name="AgentProfile_name" value="Ellen M2"  id="AgentProfile_name">
@@ -401,9 +600,21 @@
 	</div>
 	
 	
-	<div id="result" style="border:1px solid #CCCCCC; margin-top:24px;height:auto;padding:6px;position:fixed;top:25%;left:650px;width:375px;"><h2>Results</h2></div>
+	<div id="result"><h2>Results</h2></div>
 	</form>
-
+<div id="correctRespPatternExamples" ><a href="#" id="exampleClose" style="float:right;" class="required" onclick="return false;">[x]CLOSE</a>
+					<ul> Find the correct interaction type. Copy the quoted text, including the quotes, and paste it in the "Correct Responses Pattern" box at left. Then edit the text as appropriate for your interaction.
+						<li>true-false: "true"</li>
+						<li>choice:  "golf[,]tetris"</li>
+						<li>fill-in:   "Bob's your uncle"</li>
+						<li>likert:   "likert_3"</li>
+						<li>matching: "ben[.]3[,]chris[.]2[,]troy[.]4[,]freddie[.]1"</li>
+						<li>sequencing:  "tim[,]mike[,]ells[,]ben"</li>
+						<li>performance:    "pong[.]1:[,]dg[.]:10[,]lunch[.]"</li>
+						<li>numeric:    "4:"</li>
+						<li>other:  "(35.937432,-86.868896)" //example where a location is indicated on a map</li>
+					</ul>
+				 </div><!--end correctRespPatternExamples-->
 </body>
 <script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js'></script> 
 <script type="text/javascript" src="js/base64.js"></script>
@@ -412,10 +623,15 @@
 <script type="text/javascript" src="js/xapiwrapper.js"></script>
 <script type="text/javascript" src="js/config.js"></script>
 <script>
-	var teststmt = {"actor" : {"mbox" : "mailto:tom@example.com","name":"Ellen M","objectType": "Agent"},
+	var teststmt = {"actor" : {"mbox" : "mailto:tom@example.com","name":"Tom XAPIWrapperTester","objectType": "Agent"},
             "verb"  : {"id" : "http://adlnet.gov/expapi/verbs/attempted",
-                       "display" : {"en-US" : "answered"}},
+                       "display" : {"en-US" : "attempted"}},
             "object":{"id" : "http://adlnet.gov/expapi/activities/module/","objectType": "Activity"}};
+            
+    var choiceCount = 2;		
+    	var scaleCount = 2;
+    	var sourceCount = 2;//used for both source and target
+    	var stepCount = 2;
 
 	$( document ).ready(function( ) {
 		var adl = ADL.XAPIWrapper;
@@ -438,8 +654,132 @@
     	$("#sendStatementBtn3").click( function(){ setStatementParams()} );
     	$("#sendStatementBtn4").click( function(){ setStatementParams()} );
     	$("#sendStatementBtn5").click( function(){ setStatementParams()} );
+    	//toggle link functions to open/close boxes that arent needed at the moment
+    	$("#sendProfileBtn1").click( function(){ sendAgentProfile();  }); 
+    	$("#resultToggle").click(function(){$("#SG_resultinputs").toggle();  });
+    	$("#showCorrectResponsePatternEx").click(function(){$('#correctRespPatternExamples').toggle(); });
+    	$("#sendStatementToggle").click(function(){scrollTo("sendstatementfreeform");$("#sendStatementInputs").toggle();  }); 
+    	$("#sendStateToggle").click(function(){$("#sendStateInputs").toggle();  }); 
+    	//$("#sendStateToggle").click(function(){$("#sendStateInputs").toggle();  }); 
+    	$("#getStateToggle").click(function(){$("#getStateInputs").toggle();  }); 
+    	$("#getModuleSpecificToggle").click(function(){$("#getModuleSpecificInputs").toggle();  }); 		
+    	$("#statementGeneratorToggle").click(function(){$("#statementGeneratorInputs").toggle();  });
+    	$("#sendAgentProfileToggle").click(function(){$("#sendAgentProfileInputs").toggle();  });
+    	$("#exampleClose").click(function(){ $("#correctRespPatternExamples").hide(); }); 
+    	$("#objecttype").change(function(){scrollTo("obj")});
     	
-    	$("#sendProfileBtn1").click( function(){ sendAgentProfile();  });  	
+    	$("#addChoice").click(function(){ $("#actDef_comp_choice").addForms("choice"); });
+    	$("#addScale").click(function(){  $("#actDef_comp_scale").addForms("scale"); });
+    	$("#addMatch").click(function(){
+    			$("#actDef_comp_source").addForms("source"); 
+    			$("#actDef_comp_target").addForms("target");
+    	});
+    	$("#addStep").click(function(){ $("#actDef_comp_step").addForms("step"); });
+    	
+    	$("#actDef_interactionType").change(function(){
+    		scrollTo('intprop');
+    		switch( $("#actDef_interactionType").val() ){
+			case "choice":
+			$("div[id^=actDef_comp_]").hide();
+			$("#intComponents").show();
+			$("#actDef_comp_choice").show();
+			break;
+			case "likert":
+			$("div[id^=actDef_comp_]").hide();
+			$("#intComponents").show();
+			$("#actDef_comp_scale").show();
+			break;
+			case "matching":
+				$("div[id^=actDef_comp_]").hide();
+				$("#intComponents").show();
+				$("#actDef_comp_source").show();
+				$("#actDef_comp_target").show();
+			break;
+			case "performance":
+				$("div[id^=actDef_comp_]").hide();
+				$("#intComponents").show();
+				$("#actDef_comp_steps").show();
+			break;
+			default:
+				$("#intComponents").hide();
+			}
+    	
+    	})
+    	
+	 			
+		
+    	 
+    	$.fn.addForms = function(f){
+    	  	
+    	  	choiceCount =(choiceCount<10)? '0'+(choiceCount):choiceCount;
+    		scaleCount  =(scaleCount<10) ? '0'+scaleCount : scaleCount;
+    		sourceCountPadded =(sourceCount<10) ? '0'+sourceCount : sourceCount;
+    		targetCount =(sourceCount<10) ? '0'+sourceCount : sourceCount;
+    		stepCount   =(stepCount<10) ? '0'+stepCount : stepCount;	 
+    		
+    		
+    		var choiceForm ="<div id='actDef_compChoice"+choiceCount+"'>"+
+							"<label>Choice ID "+choiceCount+
+							"<input id='actDef_compChoiceID"+choiceCount+"' type='text'></label>"+
+							"<label>choice Description "+choiceCount+" <span class='optional'>(English only)</span>"+
+							"<input id='actDef_compChoiceDesc"+choiceCount+"' type='text'>"+
+							"</label>"+					
+							"</div>";
+    		var scaleForm ="<div id='actDef_compScale"+scaleCount+"'>"+
+							"<label>Scale ID "+scaleCount+
+							"<input id='actDef_compScaleID"+scaleCount+"' type='text'></label>"+
+							"<label>Scale Description "+scaleCount+" <span class='optional'>(English only)</span>"+
+							"<input id='actDef_compScaleDesc"+scaleCount+"' type='text'>"+
+							"</label>"+					
+							"</div>";
+    		var sourceForm="<div id='actDef_compSource"+sourceCountPadded+"'>"+
+							"<label>Source ID "+sourceCountPadded+
+							"<input id='actDef_compSourceID"+sourceCountPadded+"' type='text'></label>"+
+							"<label>Source Description "+sourceCountPadded+" <span class='optional'>(English only)</span>"+
+							"<input id='actDef_compSourceDesc"+sourceCountPadded+"' type='text'>"+
+							"</label>"+					
+							"</div>";
+    		var targetForm = "<div id='actDef_compTarget"+targetCount +"'>"+ //target uses sourceCount also.
+							"<label>Target ID "+targetCount +
+							"<input id='actDef_compTargetID"+targetCount +"' type='text'></label>"+
+							"<label>target Description "+targetCount +" <span class='optional'>(English only)</span>"+
+							"<input id='actDef_compTargetDesc"+targetCount +"' type='text'>"+
+							"</label>"+					
+							"</div>";
+    		var stepForm = "<div id='actDef_compStep"+stepCount+"'>"+
+							"<label>Step ID "+stepCount+
+							"<input id='actDef_compStepID"+stepCount+"' type='text'></label>"+
+							"<label>Step Description "+stepCount+" <span class='optional'>(English only)</span>"+
+							"<input id='actDef_compStepDesc"+stepCount+"' type='text'>"+
+							"</label>"+					
+							"</div>";
+							
+			
+			switch(f){
+			case "choice":
+			$(this).append(choiceForm);
+                    choiceCount++;
+                    break;
+			case "scale":
+			 $(this).append(scaleForm);
+                    scaleCount++;
+                    break;
+            case "source":
+            $(this).append(sourceForm);
+                    //sourceCount++;//this will be incremented in the target step below.
+                    break;
+             case "target":
+            $(this).append(targetForm);
+                    sourceCount++;
+                    break;
+            default:			 
+    		}//end switch	
+    	}//end addforms
+    	
+    	
+ 
+    	
+    	
     	$("#dataset").on("change", function (){
 			 $("div.submenu").hide();
 			 var targID  = $(this).val ();
@@ -450,10 +790,12 @@
 			$('#dataset').blur();
     	});  
     	$("#objecttype").on("change",function(){
+    		scrollTo('obj');
     		 switch($("#objecttype").val()){
 			case "activity":
 				$(".objectproperties").hide();
-			  	$("div#objectTypeActivity").show();  
+			  	$("div#objectTypeActivity").show(); 
+			  	var isInteractionActivity =false; 
 			  	break;
 			case "agent":
 			  	$(".objectproperties").hide();
@@ -477,10 +819,26 @@
 			}//end switch
 
     		  		
-    	})  	
+    	});
+    	$("#actDef_activitytype").on("change",function(){
+    		scrollTo('acttype');
+    		$("div#actDef_InteractionProperties").hide();
+    		 isInteractionActivity = false;
+    		 
+    		 switch($("#actDef_activitytype").val()){
+    		 case "http://adlnet.gov/expapi/activities/interaction":
+    			$("div#actDef_InteractionProperties").show();
+    			 isInteractionActivity = true;
+    			break;
+    			default:
+    		}//end switch;
+    		});  	
     	populateVerbOptions()
 });//end ready function
 
+	function scrollTo(anchor) {
+    	location.hash = "#" + anchor;
+	}
 
 	function populateVerbOptions(){
 		var verboptions='<select name = "verbselector" id="verbselector">\n';
@@ -578,14 +936,70 @@
 	switch( $("#objecttype").val() ){
 		case "activity": 
 				
-				csParams.object.id=$("#activityid").val(),
+				csParams.object.id=$("#activityid1").val(),
 				csParams.object.objectType="Activity",
 				csParams.object.definition = {},
 				csParams.object.definition["name"]={},
 				csParams.object.definition.description = {},
-				csParams.object.definition["name"]["en-US"]=$("#actdefName").val(),	
-				csParams.object.definition.description["en-US"]=$("#actdefDescription").val(),
-				csParams.object.definition.type=$("#activitytype").val();
+				csParams.object.definition["name"]["en-US"]=$("#actDef_Name").val(),	
+				csParams.object.definition.description["en-US"]=$("#actDef_Description").val(),
+				csParams.object.definition.type=$("#actDef_activitytype").val();
+				csParams.object.definition.moreinfo=$("actDef_moreInfo").val(); 
+			  	if(isInteractionActivity){ 
+			  		if($("#actDef_interactionType").val()!=""){csParams.object.definition.interactionType =  $("#actDef_interactionType").val();}
+			  		if($("#actDef_intRespPattern").text()!=""){//I am assuming this is truly optional
+			  		 	csParams.object.definition.correctResponsesPattern = $("#actDef_intRespPattern").text();
+			  		}
+			  		 
+			  		 
+			  		var map = {};
+			  		if($("#actDef_interactionType").val()=="choice"){			  		   
+			  		 	$.each( $(":input[id^=actDef_compChoiceID]"),function(k,v){
+			  				var num = $(":input[id^=actDef_compChoiceID]").length;
+			  				k = k+1; k=(k<10)? '0'+(k):k; 
+			  				if(testing){console.log('zeropadded k ='+k);} 
+			  				cmap[$("#actDef_compChoiceID"+k).val()] = $("#actDef_compChoiceDesc"+k).val(); 		 
+			  		 	});//end $.each
+			  		 		csParams.object.definition.choices = map;
+			  		}//end if choice
+			  		 	 
+			  		if($("#actDef_interactionType").val()=="likert"){
+			  		 	$.each( $(":input[id^=actDef_compScaleID]"),function(k,v){
+			  				var num = $(":input[id^=actDefScaleID]").length;
+			  				k = k+1;k=(k<10)? '0'+(k):k; 
+			  				map[$("#actDef_compScaleID"+k).val()] = $("#actDef_compScaleDesc"+k).val(); 		 
+			  		 	});//end $.each
+			  		 		csParams.object.definition.scale =map;
+			  		}//end if likert
+			  		
+			  		if($("#actDef_interactionType").val() == "matching"){
+			  		var targetmap={}, sourcemap = {};
+			  		 	$.each( $(":input[id^=actDef_compSourceID]"),function(k,v){
+			  				var num = $(":input[id^=actDefSourceID]").length;
+			  				k = k+1; k=(k<10)? '0'+(k):k; 
+			  				if(testing){console.log('zeropadded k ='+k);} 
+			  				console.log('k='+k+' $("#actDef_compSourceID"+k).val()='+$("#actDef_compSourceID"+k).val()+' $("#actDef_compSourceDesc"+k).val()='+$("#actDef_compSourceDesc"+k).val());
+			  				console.log('k='+k+' $("#actDef_compTargetID"+k).val()='+$("#actDef_compTargetID"+k).val()+' $("#actDef_compTargetDesc"+k).val()='+$("#actDef_compTargetDesc"+k).val());
+			  				sourcemap[$("#actDef_compSourceID"+k).val()] = $("#actDef_compSourceDesc"+k).val(); 
+			  				targetmap[$("#actDef_compTargetID"+k).val()] = $("#actDef_compTargetDesc"+k).val(); 		 
+			  		 	});//end $.each
+			  		 		csParams.object.definition.source = sourcemap;
+			  		 		csParams.object.definition.target = targetmap;
+			  		 }//end if matching
+			  		 
+			  		 if($("#actDef_interactionType").val()=="steps"){
+			  		 	$.each( $(":input[id^=actDef_compStepsID]"),function(k,v){
+			  				var num = $(":input[id^=actDefStepsID]").length;
+			  				k = k+1;k=(k<10)? '0'+(k):k; 
+			  				map[$("#actDef_compStepsID"+k).val()] = $("#actDef_compStepsDesc"+k).val(); 		 
+			  		 	});//end $.each
+			  		 		csParams.object.definition.steps =map;
+			  		}//end if likert	
+			  		 if($("#actDef_interactionType").val()==""){csParams.object.definition.scale =[actDef_intRespPattern] }
+			  		 if($("#actDef_interactionType").val()==""){csParams.object.definition.source = [actDef_intRespPattern]}
+			  		 if($("#actDef_interactionType").val()==""){csParams.object.definition.target =[actDef_intRespPattern] }
+			  		 if($("#actDef_interactionType").val()==""){csParams.object.definition.steps = [actDef_intRespPattern]}
+			  	} 
 			  	break;
 		case "agent": 
 			csParams.object.id=$("#objTypeAgentMbox").val(),
@@ -620,11 +1034,53 @@
 			csParams.object.definition.description["en-US"]="Default Activity Description";
 	}//end switch
 
-    		  		
-      		  	
+    //result area - all properties of result are optional, so if any of them are filled in, send a result.		  		
+      	if($("input[id^=SG_result_]").val() !=""){
+      		csParams.result = {};
+      		
+      		if($("#SG_result_success").val() !=""){
+      			csParams.result.success = $("#SG_result_success").val();
+      		}
+      		if($("#SG_result_completion").val() !=""){
+      			csParams.result.completion = $("#SG_result_completion").val();
+      		}
+      		//if any score inputs filled, put score object in.
+      		 if($("input[id^=#SG_result_score_]").val()!=""){
+      			 csParams.result.score  = {};
+      			 var minScoreVal =  parseInt($("#SG_result_score_minscore").val(),10);
+      			 var maxScoreVal =  parseInt($("#SG_result_score_maxscore").val(),10);
+      			 var rawScoreVal =  parseInt($("#SG_result_score_rawscore").val(),10);
+      			 }
+      			 //if ALL score inputs filled, calculate scaled score
+      		if(allScoreInputsFilled()){
+      			//fill in scaled score automatically
+      			csParams.result.score["scaled"] =  (rawScoreVal-minScoreVal )/(maxScoreVal - minScoreVal)>> 0;
+      		}	
+      			
+      		if($("#SG_result_rawscore").val() !=""){
+      				csParams.result.score["raw"]  = $("#SG_result_rawscore").val();
+      			
+      		}
+      		if($("#SG_result_response").text() !=""){
+      			csParams.result.response = $("#SG_result_response").text();
+      		}
+      		if($("#SG_result_duration").val() !=""){
+      			csParams.result.duration = $("#SG_result_duration").val();
+      		}
+      		
+      		//cmi.score.scaled = ((internal_raw - internal_min)/(internal_max - internal_min))
+      	}	  	
 	 generateStatement(csParams);
 }//end function setStatementParams()	  
- 	 
+ 	
+ 	function allScoreInputsFilled() {
+    	var allScoreInputsFilled = true;
+    		$("input[id^=#SG_result_score_]").each(function() {
+        		if($(this).val() == '') allScoreInputsFilled = false;
+    		});
+    	return allScoreInputsFilled;
+	} 
+	
  	function generateStatement(params){
 		var thejson = JSON.stringify(params);
 		if(testing){console.log(thejson);}

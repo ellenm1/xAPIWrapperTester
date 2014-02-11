@@ -8,4 +8,11 @@ UNDER ACTIVE DEVELOPMENT.
 Directions for editing config.js:
 https://github.com/adlnet/xAPIWrapper#configuration
 
-2. Paste in a valid statement and click "Send Statement" or try some of the other options. Results show up in the box at right.
+What this does:
+
+1. Generates fairly complex statements, including Interactions, Results, etc. More coming soon.
+2. Sends statements to an LRS
+3. Sends and Gets State
+4. demonstrates getting very specific pieces of the State dataset
+5. Sends Agent Profiles.
+

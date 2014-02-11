@@ -1,5 +1,7 @@
+html{}
 body {
 	background: #ececec;
+	 
 }
 
 form.formular {
@@ -108,7 +110,19 @@ font-size:24px;
 color:#CCCCCC;
 margin-bottom:0px;
 }
-
+h2 a.toggleLink, h3 a.toggleLink{
+	font:10px plain arial, verdana, "sans-serif";
+	margin-left:24px;
+	color:#000000;	
+}
+.formular a.add,.formular label span.required,.formular label  span.optional, h2 span.optional, h2 span.required, h3 span.required, h3 span.optional,h4 span.required, h4 span.optional{
+	font:10px plain arial, verdana, "sans-serif";
+	color:red;
+	margin-left:10px;
+}
+span.optional, h2 span.optional, h3 span.optional, h4 span.optional {
+	color:green;
+}
 textarea.open{
 	height:100px;
 }
@@ -129,3 +143,25 @@ a.toggles.closed{
 a.toggles.open{
 	background:url(../images/arrows-normal.png) 3px 46px;
 }
+.SG_statementProperties {margin-top:6px;}
+
+#result{
+	border:1px solid #CCCCCC; 
+	margin-top:24px;
+	height:auto;
+	padding:6px;
+	position:fixed;
+	top:25%;
+	left:650px;
+	width:375px;
+	}
+	
+#correctRespPatternExamples{
+	display:none;
+	position:fixed;
+	right:0px;
+	top:40%;
+	left:650px;
+	width:375px;
+	background-color:#FFF;
+	}

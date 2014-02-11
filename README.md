@@ -16,3 +16,7 @@ What this does:
 4. demonstrates getting very specific pieces of the State dataset
 5. Sends Agent Profiles.
 
+Try the demo here:
+http://thedesignspace.net/misc/xapi/
+
+ 

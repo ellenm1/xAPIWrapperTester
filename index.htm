@@ -958,7 +958,7 @@
 			  				var num = $(":input[id^=actDef_compChoiceID]").length;
 			  				k = k+1; k=(k<10)? '0'+(k):k; 
 			  				if(testing){console.log('zeropadded k ='+k);} 
-			  				cmap[$("#actDef_compChoiceID"+k).val()] = $("#actDef_compChoiceDesc"+k).val(); 		 
+			  				map[$("#actDef_compChoiceID"+k).val()] = $("#actDef_compChoiceDesc"+k).val(); 		 
 			  		 	});//end $.each
 			  		 		csParams.object.definition.choices = map;
 			  		}//end if choice

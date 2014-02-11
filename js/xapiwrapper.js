@@ -32,10 +32,10 @@ if ( !Date.prototype.toISOString ) {
     var Config = function()
     {
         var conf = {};
-       // conf['endpoint'] = "http://mlearninginfo.med.umich.edu/scormEngineTinCan/ScormEngineInterface/TCAPI/";
+        
         try
         {
-            //conf['auth'] = "Basic " + Base64.encode('root:mlearning2able4best'); 
+              
         }
         catch (e)
         {

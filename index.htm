@@ -632,6 +632,7 @@
     	var scaleCount = 2;
     	var sourceCount = 2;//used for both source and target
     	var stepCount = 2;
+    var isInteractionActivity =false;
 
 	$( document ).ready(function( ) {
 		var adl = ADL.XAPIWrapper;
@@ -795,7 +796,7 @@
 			case "activity":
 				$(".objectproperties").hide();
 			  	$("div#objectTypeActivity").show(); 
-			  	var isInteractionActivity =false; 
+			  	isInteractionActivity =false; 
 			  	break;
 			case "agent":
 			  	$(".objectproperties").hide();
@@ -1045,22 +1046,37 @@
       			csParams.result.completion = $("#SG_result_completion").val();
       		}
       		//if any score inputs filled, put score object in.
-      		 if($("input[id^=#SG_result_score_]").val()!=""){
+      		 if($("input[id^=SG_result_score_]").val()!=""){
       			 csParams.result.score  = {};
-      			 var minScoreVal =  parseInt($("#SG_result_score_minscore").val(),10);
-      			 var maxScoreVal =  parseInt($("#SG_result_score_maxscore").val(),10);
-      			 var rawScoreVal =  parseInt($("#SG_result_score_rawscore").val(),10);
+      			 
+      			 var minScoreVal =  parseInt($("#SG_result_minscore").val(),10);
+      			 var maxScoreVal =  parseInt($("#SG_result_maxscore").val(),10);
+      			 var rawScoreVal =  parseInt($("#SG_result_rawscore").val(),10);
+      			 console.log('rawScoreVal = '+rawScoreVal+', maxScoreVal= '+maxScoreVal+', minScoreVal'+minScoreVal);
       			 }
       			 //if ALL score inputs filled, calculate scaled score
       		if(allScoreInputsFilled()){
       			//fill in scaled score automatically
-      			csParams.result.score["scaled"] =  (rawScoreVal-minScoreVal )/(maxScoreVal - minScoreVal)>> 0;
+      			if (parseFloat(maxScoreVal - minScoreVal) > 0){
+      				csParams.result.score.scaled =  (parseFloat(rawScoreVal-minScoreVal))/(parseFloat(maxScoreVal - minScoreVal));
+      				}
+      			else {/*not sure what to do if invalid - probably just prevent it in the first place*/}	 
       		}	
       			
       		if($("#SG_result_rawscore").val() !=""){
-      				csParams.result.score["raw"]  = $("#SG_result_rawscore").val();
+      				csParams.result.score.raw  = $("#SG_result_rawscore").val();
       			
       		}
+      		if($("#SG_result_score_minscore").val() !=""){
+      				csParams.result.score.min  = $("#SG_result_rawscore").val();
+      			
+      		}
+      		if($("#SG_result_rawscore").val() !=""){
+      				csParams.result.score.max  = $("#SG_result_rawscore").val();
+      			
+      		}
+      		
+      		 
       		if($("#SG_result_response").text() !=""){
       			csParams.result.response = $("#SG_result_response").text();
       		}

@@ -1,5 +1,7 @@
 xAPIWrapperTester
 =================
+xAPI statement Generator and tester for people who don't know where to start
+
 ##Demo:
 http://thedesignspace.net/misc/xapi/
 

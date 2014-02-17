@@ -43,6 +43,7 @@
     	$("#sendStatementBtn3").click( function(){ setStatementParams()} );
     	$("#sendStatementBtn4").click( function(){ setStatementParams()} );
     	$("#sendStatementBtn5").click( function(){ setStatementParams()} );
+    	$("#sendStatementBtn6").click( function(){ setStatementParams()} );
     	//toggle link functions to open/close boxes that arent needed at the moment
     	$("#sendProfileBtn1").click( function(){ sendAgentProfile();  }); 
     	$("#resultToggle").click(function(){$("#SG_resultinputs").toggle();  });
@@ -435,8 +436,7 @@
       		}
       		//if any score inputs filled, put score object in.
       		 if($("input[id^=SG_result_score_]").val()!=""){
-      			 csParams.result.score  = {};
-      			 
+      			 csParams.result.score  = {};		 
       			 var minScoreVal =  parseInt($("#SG_result_minscore").val(),10);
       			 var maxScoreVal =  parseInt($("#SG_result_maxscore").val(),10);
       			 var rawScoreVal =  parseInt($("#SG_result_rawscore").val(),10);
@@ -459,8 +459,7 @@
       		}
       		if($("#SG_result_rawscore").val() !=""){
       				csParams.result.score.max  = $("#SG_result_rawscore").val();	
-      		}
-      		
+      		}   		
       		if($("#SG_result_response").text() !=""){
       			csParams.result.response = $("#SG_result_response").text();
       		}
@@ -493,9 +492,9 @@
 				csParams.context.team["name"]=$("#SG_context_team_name").val();
 				var teammemberlist=unescape(cleanTextArea(document.getElementById("SG_context_team_members")) );
 				csParams.context.team["members"]="["+teammemberlist+"]";//array of agent objects
-			}
+			}//end if($("#SG_context_team_name
       
-      }
+      }//end if(hascontext
       
       });
       
@@ -514,7 +513,7 @@
 	} 
 	
  	function generateStatement(params){
- 	//$('#form1').validationEngine('validate');
+ 	$('#form1').validationEngine('validate');
 		var thejson = JSON.stringify(params);
 		if(testing){console.log(thejson);}
 		alert(thejson);

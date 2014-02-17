@@ -1,5 +1,3 @@
-xAPIWrapperTester
-=================
 xAPI statement Generator and tester for people who don't know where to start
 
 ##Demo:
@@ -13,7 +11,7 @@ http://thedesignspace.net/misc/xapi/
 5. Sends Agent Profiles.
 6. Eventually will provide guidance for determining statement structure for typical use cases
 
-
+Users the ADL xAPIWrapper
 
 
 

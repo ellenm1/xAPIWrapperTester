@@ -120,7 +120,7 @@ h2 a.toggleLink, h3 a.toggleLink{
 	color:red;
 	margin-left:10px;
 }
-span.optional, h2 span.optional, h3 span.optional, h4 span.optional {
+span.optional, .formular label span.optional, h2 span.optional, h3 span.optional, h4 span.optional {
 	color:green;
 }
 textarea.open{

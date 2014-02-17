@@ -1,7 +1,9 @@
 xAPIWrapperTester
 =================
-##What this does:
+##Demo:
+http://thedesignspace.net/misc/xapi/
 
+##What this does:
 1. Generates complex statements, including Teams, Interactions, Results, Contexts.
 2. Sends statements to an LRS
 3. Sends and Gets State
@@ -11,8 +13,7 @@ xAPIWrapperTester
 
 
 
-##Demo:
-http://thedesignspace.net/misc/xapi/
+
 
 A form I'm using to test all the xAPI calls needed for our learning modules. Depends on the ADL xAPI Wrapper.
 UNDER ACTIVE DEVELOPMENT. 

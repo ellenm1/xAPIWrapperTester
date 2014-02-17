@@ -10,10 +10,10 @@ https://github.com/adlnet/xAPIWrapper#configuration
 
 What this does:
 
-1. Generates fairly complex statements, including Interactions, Results, etc. More coming soon.
+1. Generates fairly complex statements, including Interactions, Results, Contexts.
 2. Sends statements to an LRS
 3. Sends and Gets State
-4. demonstrates getting very specific pieces of the State dataset
+4. Demonstrates retrieval of specific segments of the State dataset
 5. Sends Agent Profiles.
 
 Try the demo here:

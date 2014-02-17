@@ -1,5 +1,18 @@
 xAPIWrapperTester
 =================
+##What this does:
+
+1. Generates complex statements, including Teams, Interactions, Results, Contexts.
+2. Sends statements to an LRS
+3. Sends and Gets State
+4. Demonstrates retrieval of specific segments of the State dataset
+5. Sends Agent Profiles.
+6. Eventually will provide guidance for determining statement structure for typical use cases
+
+
+
+##Demo:
+http://thedesignspace.net/misc/xapi/
 
 A form I'm using to test all the xAPI calls needed for our learning modules. Depends on the ADL xAPI Wrapper.
 UNDER ACTIVE DEVELOPMENT. 
@@ -8,16 +21,6 @@ UNDER ACTIVE DEVELOPMENT.
 Directions for editing config.js:
 https://github.com/adlnet/xAPIWrapper#configuration
 
-What this does:
-
-1. Generates fairly complex statements, including Interactions, Results, Contexts.
-2. Sends statements to an LRS
-3. Sends and Gets State
-4. Demonstrates retrieval of specific segments of the State dataset
-5. Sends Agent Profiles.
-
-Try the demo here:
-http://thedesignspace.net/misc/xapi/
 
  
 ##ToDo:

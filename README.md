@@ -20,3 +20,12 @@ Try the demo here:
 http://thedesignspace.net/misc/xapi/
 
  
+##ToDo:
+* add detailed step by step guide as you move thru the form
+* add references to validator and jslint and other resources
+* add guidance to determine what types of statements to write
+* make duration field figure out the correct formatting 
+* context section -started
+* validation - started
+* change statement fields should look up and offer a selection of relevant statements to choose from
+* getAgent profile form

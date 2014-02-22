@@ -427,8 +427,8 @@ Note: Revision has no behavioral implications within the scope of xAPI. It is si
 	</div><!--end Statement Generator-->
 	</form>
 <!--**************************************************************-->		
-	
-	<a name="sendstatementfreeform"></a><h2 style="">Send Statement<a href="#" id="sendStatementToggle" class="toggleLink" onclick="return false;">show</a></h2>
+		<form id="form2"  class="formular" style="left:20px;margin:0px;padding-top:6px;">
+	<a name="sendstatementfreetext"></a><h2 style="">Send Statement<a href="#" id="sendStatementToggle" class="toggleLink" onclick="return false;">show</a></h2>
 	<div class="box" id="sendStatementInputs" style="display:none;">
 		Paste your own pre-written statement into the box below and click Send Statement 1. 	
 		<p><a href="" id="toggle1" class="toggles closed" onclick="expandtext(this.id);return false;"></a>
@@ -442,8 +442,9 @@ Note: Revision has no behavioral implications within the scope of xAPI. It is si
 		<p><label>Send hardcoded example statement  </label><button type= "button" id= "sendStatementBtn1">Send Statement 2</button></p>
 	
 	</div><!--box-->
-
+	</form>
 <!--**************************************************************-->	
+		<form id="form3"  class="formular" style="left:20px;margin:0px;padding-top:6px;">
 	<a name="sendstate"></a><h2>Send State<a href="#" id="sendStateToggle" class="toggleLink" onclick="return false;">show</a></h2>	
 	<div class="box" id="sendStateInputs" style="display:none;">	
 	I've pre-populated this with example learning module State data, but you can paste in your own instead.
@@ -601,8 +602,10 @@ Note: Revision has no behavioral implications within the scope of xAPI. It is si
 			<button type= "button" id= "sendStateBtn" >Send Module State</button>
 		</p>
 	</div><!--box-->
+	</form>
 <!--**************************************************************-->	
-	<h2>Get State<a href="#" id="getStateToggle" class="toggleLink" onclick="return false;">show</a></h2>		
+	<form id="form4"  class="formular" style="left:20px;margin:0px;padding-top:6px;">
+	<a name="getstate"></a><h2>Get State<a href="#" id="getStateToggle" class="toggleLink" onclick="return false;">show</a></h2>		
 	<div class="box" id="getStateInputs" style="display:none;">
 
 		<p>
@@ -615,9 +618,10 @@ Note: Revision has no behavioral implications within the scope of xAPI. It is si
 			<button type= "button" id= "getStateBtn">Get State</button>
 		</p>
 	</div><!--box-->
-	
+	</form>
 <!--**************************************************************-->	
-	<h2>Get module-Specific values<a href="#" id="getModuleSpecificToggle" class="toggleLink" onclick="return false;">show</a></h2>		
+	<form id="form5"  class="formular" style="left:20px;margin:0px;padding-top:6px;">
+	<a name="getmodspec"></a><h2>Get module-Specific values<a href="#" id="getModuleSpecificToggle" class="toggleLink" onclick="return false;">show</a></h2>		
 	<div class="box"   id="getModuleSpecificInputs" style="height:150px;display:none;">
 		<div id="mainmenu" style="float:left;border:1px solid #CCCCCC;margin-right:12px;padding:10px;height:100px"> 	
 				<label>Select data set to retrieve from<br/>State id = "modulestate"
@@ -669,10 +673,10 @@ Note: Revision has no behavioral implications within the scope of xAPI. It is si
 			<button type= "button" id= "getmvStateBtn" >Get modulevars Property from stored State</button></p>
 	 	</div>	
 	 </div><!--box-->
-	 
+	 </form>
 <!--**************************************************************-->	 
-	
-	<h2>Send Agent Profile (under construction) <a href="#" id="sendAgentProfileToggle" class="toggleLink" onclick="return false;">show</a></h2>
+	<form id="form6"  class="formular" style="left:20px;margin:0px;padding-top:6px;">
+	<a name="sendagentp"></a><h2>Send Agent Profile (under construction) <a href="#" id="sendAgentProfileToggle" class="toggleLink" onclick="return false;">show</a></h2>
 	<div class="box" id="sendAgentProfileInputs" style="display:none;">
 		<label>Agent (what agent are you creating a profile for?)
 			<input type="text" name="AgentProfile_mbox" value="ellen2@example.com" id="AgentProfile_mbox">
@@ -699,7 +703,7 @@ Note: Revision has no behavioral implications within the scope of xAPI. It is si
     	</textarea>
     	<button type= "button" id="sendProfileBtn1" >Send Agent Profile</button>
 	</div>
-	
+	</form>
 	
 	<div id="result"><h2>Results</h2></div>
 	

@@ -1,7 +1,7 @@
 html{}
 body {
 	background: #ececec;
-	 
+	min-height:1000px; 
 }
 
 form.formular {

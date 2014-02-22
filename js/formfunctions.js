@@ -49,13 +49,13 @@
     	$("#resultToggle").click(function(){$("#SG_resultinputs").toggle();  });
     	$("#contextToggle").click(function(){$("#SG_contextinputs").toggle();  });
     	$("#showCorrectResponsePatternEx").click(function(){$('#correctRespPatternExamples').toggle(); });
-    	$("#sendStatementToggle").click(function(){scrollTo("sendstatementfreeform");$("#sendStatementInputs").toggle();  }); 
+    	$("#sendStatementToggle").click(function(){scrollTo("sendstatementfreetext");$("#sendStatementInputs").toggle();  }); 
     	$("#sendStateToggle").click(function(){$("#sendStateInputs").toggle();  }); 
     	//$("#sendStateToggle").click(function(){$("#sendStateInputs").toggle();  }); 
-    	$("#getStateToggle").click(function(){$("#getStateInputs").toggle();  }); 
-    	$("#getModuleSpecificToggle").click(function(){$("#getModuleSpecificInputs").toggle();  }); 		
-    	$("#statementGeneratorToggle").click(function(){$("#statementGeneratorInputs").toggle();  });
-    	$("#sendAgentProfileToggle").click(function(){$("#sendAgentProfileInputs").toggle();  });
+    	$("#getStateToggle").click(function(){$("#getStateInputs").toggle();scrollTo("getstate");  }); 
+    	$("#getModuleSpecificToggle").click(function(){$("#getModuleSpecificInputs").toggle();scrollTo("getmodspec");    }); 		
+    	$("#statementGeneratorToggle").click(function(){$("#statementGeneratorInputs").toggle(); scrollTo("top");   });
+    	$("#sendAgentProfileToggle").click(function(){$("#sendAgentProfileInputs").toggle();scrollTo("sendagentp");    });
     	$("#exampleClose").click(function(){ $("#correctRespPatternExamples").hide(); }); 
     	$("#objecttype").change(function(){scrollTo("obj")});
     	$("#addChoice").click(function(){ $("#actDef_comp_choice").addForms("choice"); });

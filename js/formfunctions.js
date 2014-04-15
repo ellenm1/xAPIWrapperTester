@@ -1,6 +1,6 @@
  //todo 
  //add detailed step by step guide as you move thru the form
- //add references to validator and other resources
+ //x-add references to validator and other resources
  	//http://zackpierce.github.io/xAPI-Validator-JS/
  //add pre-form guidance to determine what types of statements to write
  //make duration field figure out the correct formatting 
@@ -9,7 +9,7 @@
   //change statement fields to look up relevant statements so you can select them
  //get piece of Agent profile form
 
- 
+
  var teststmt = {"actor" : {"mbox" : "mailto:tom@example.com","name":"Tom XAPIWrapperTester","objectType": "Agent"},
             "verb"  : {"id" : "http://adlnet.gov/expapi/verbs/attempted",
                        "display" : {"en-US" : "attempted"}},
@@ -29,8 +29,8 @@
 		// mark the first option as selected
 		$("select").val("");
 		$("objecttype").val("");
-		$("#form1").validationEngine();
-		 
+		//$("#form1").validationEngine();
+		$("#endpoint").html(conf.endpoint); 
    		//$("#sendstatementBtn1").click( function(){ sendStatement( unescape( $('#statement').html() ) ); });
    		//$("#sendstatementBtn1").click( function(){ sendStatement( $.parseJSON( unescape( $('#statement').html() ) ) ); });
    		$("#sendStatementBtn0").click( function(){ sendStatement( $.parseJSON( unescape(cleanTextArea(document.forms[0].statement) ) ) ) } );//textarea output has to be cleaned up before sending or you get JSON errors
@@ -252,6 +252,9 @@
 		ADL.XAPIWrapper.sendStatement(st, function(resp, obj){ 
 													var json_text = JSON.stringify(st, null, 2);
 												$('#result').html(
+													'<div class="box"><pre>'+
+													'var params='+json_text+
+													'sendStatement(params)</pre></div>'+
 													 '<b>Statement:</b><br/>'+json_text + 
 
 													'<br/><br/> st.actor='+ st.actor+'<br/>st.id='+st.id+'st.object'+st.object+'<br/>st.verb='+st.verb+'<br/><b style="color:red">Response:</b><br/>obj.id='+obj.id+'<br/>resp.response=' +resp.response) 
@@ -312,7 +315,9 @@
 	//openid	URI	An openID that uniquely identifies the Agent.
 	//account	Object	A user account on an existing system e.g. an LMS or intranet.
 	*/	
-	var myagent = {"mbox" : "mailto:"+ $('#mbox').val(),"name": $('#name').val(),"objectType": "Agent"};
+	var mailbox = ($('#mbox').val())?$('#mbox').val():'tester@example.com';
+	var agentname = ($('#name').val())?$('#name').val():'Ellen M';
+	var myagent = {"mbox" : "mailto:"+ mailbox,"name": agentname,"objectType": "Agent"};
 	var vbselect = $("#verbselector");
 	var vb = typeof $("#verbselector").val()!="undefined"?$("#verbselector").val():"http://adlnet.gov/expapi/verbs/experienced";
 	console.log('vb='+vb);
@@ -334,7 +339,7 @@
 				csParams.object.definition["name"]["en-US"]=$("#actDef_Name").val(),	
 				csParams.object.definition.description["en-US"]=$("#actDef_Description").val(),
 				csParams.object.definition.type=$("#actDef_activitytype").val();
-				csParams.object.definition.moreinfo=$("actDef_moreInfo").val(); 
+				csParams.object.definition.moreinfo=$("#actDef_moreInfo").val(); 
 			  	if(isInteractionActivity){ 
 			  		if($("#actDef_interactionType").val()!=""){csParams.object.definition.interactionType =  $("#actDef_interactionType").val();}
 			  		if($("#actDef_intRespPattern").text()!=""){//I am assuming this is truly optional
@@ -496,11 +501,42 @@
       
       }//end if(hascontext
       
-      });
+      });//end each
       
+     //attachments area
+      $.each($("input[id^=SG_attachments_]"),function(){
+      	var hasattachment;
+      	if( $(this).val() && $(this).val()!=""){
+       		hasattachment=true;
+      	}
       
+        if(hasattachment){
+      	csParams.attachments = {};
+      		if($("#SG_attachments_UsageType").val() !=""){
+					csParams.usageType = $("#SG_attachments_UsageType").val();//change to language map format
+			}
+			if($("#SG_attachments_display_title").val() !=""){
+					csParams.display = $("#SG_attachments_display_title").val();//change to language map format
+			}
+		 	if($("#SG_attachments_description").val() !=""){
+					csParams.description = $("#SG_attachments_description").val();//change to language map format
+			}
+			if($("#SG_attachments_content_type").val() !=""){
+					csParams.contentType = $("#SG_attachments_content_type").val();//change to language map format
+			}
+			if($("#SG_attachments_length").val() !=""){
+					csParams.length = $("#SG_attachments_length").val();//change to language map format
+			}
+			if($("#SG_attachments_sha2").val() !=""){
+					csParams.sha2 = $("#SG_attachments_sha2").val();//change to language map format
+			}
+			if($("#SG_attachments_fileURL").val() !=""){
+					csParams.fileURL = $("#SG_attachments_fileURL").val();//change to language map format
+			}
+		 
+      }//end if(hasattachment
+  	 });//end each
       
-  	
 	 generateStatement(csParams);
 }//end function setStatementParams()	  
  	
@@ -513,11 +549,11 @@
 	} 
 	
  	function generateStatement(params){
- 	$('#form1').validationEngine('validate');
+ 	//$('#form1').validationEngine('validate');
 		var thejson = JSON.stringify(params);
 		if(testing){console.log(thejson);}
 		alert(thejson);
-		//sendStatement(params);
+		 sendStatement(params);
 	}	 
 
 	/*
@@ -620,5 +656,54 @@ Parameters passed to callback:
 		}
 	}	
   
+ 
+ //var sha256;
 
+  function readBlob(opt_startByte, opt_stopByte, sha256) {
+
+    var files = document.getElementById('files').files;
+    if (!files.length) {
+      alert('Please select a file!');
+      return;
+    }
+
+    var file = files[0];
+    var start = parseInt(opt_startByte) || 0;
+    var stop = parseInt(opt_stopByte) || file.size - 1;
+
+    var reader = new FileReader();
+
+    // If we use onloadend, we need to check the readyState.
+    reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+       // document.getElementById('byte_content').textContent = evt.target.result;
+       // document.getElementById('byte_range').textContent = 
+            ['Read bytes: ', start + 1, ' - ', stop + 1,
+             ' of ', file.size, ' byte file'].join('');
+
+        //**UPDATED SOLUTION: Since its binary data, the message needs to be converted from string to bytes using Latin1**
+            sha256.update(CryptoJS.enc.Latin1.parse(evt.target.result));
+
+        var hash = sha256.finalize();
+		//alert('file size'+file.size);
+		document.getElementById('SG_attachments_length').value = file.size;
+       // document.getElementById('attachSHA').value = ['SHA-256: ', hash].join('');
+         document.getElementById('SG_attachments_sha2').value = [hash].join('');
+      }
+    };
+
+    var blob = file.slice(start, stop + 1);
+    reader.readAsBinaryString(blob);
+  }
+
+  document.querySelector('.readBytesButtons').addEventListener('click', function(evt) {
+    if (evt.target.tagName.toLowerCase() == 'button') {
+      var startByte = evt.target.getAttribute('data-startbyte');
+      var endByte = evt.target.getAttribute('data-endbyte');
+
+      sha256 = CryptoJS.algo.SHA256.create();
+
+      readBlob(startByte, endByte, sha256);
+    }
+  }, false);
  

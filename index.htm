@@ -12,12 +12,14 @@
 <body onload="scrollTo('top')">
 	<form id="form1"  class="formular" style="left:20px;margin:0px;padding-top:6px;">
 		
-
+<span id="configdisplay" class="">Endpoint: <span id="endpoint"></span></span>
 
 	 <!--STATEMENT GENERATOR-->
 	<h2>Generate Statements <span style="font-size:12px;">(under construction!)</span><a href="#" id="statementGeneratorToggle" class="toggleLink" onclick="return false;">show/hide</a></h2>	
 	<div class="box" id="statementGeneratorInputs" style="">
-	This currently displays but <u>does not send</u> statements because it is still changing frequently. Ultimately it will generate statements for all the different Object types. If you want to send your statement, copy it and paste it into the SendStatement box at top.
+	Based on the <a href="https://github.com/adlnet/xAPIWrapper" target="_blank">ADL xAPI Wrapper.</a> This will first show you the statement you are sending, then sends the statement to the LRS. 
+	When it gets a response, it shows the <a href="https://github.com/adlnet/xAPIWrapper" target="_blank">ADL xAPI Wrapper.</a> javascript call used to send the statement. Ultimately it will generate statements for all the different Object types. 
+	If you want to validate statements you are crafting by hand, use this validator to correct them: <a href="http://zackpierce.github.io/xAPI-Validator-JS/" target="_blank">http://zackpierce.github.io/xAPI-Validator-JS/</a> 
 		<div id="SG_actor" class="SG_statementProperties box">
 			<h3>I. Actor <span class="required">Required</span></h3>
 			<div style="float:left;"><label>Email address <span class="required">Required</span>
@@ -33,7 +35,8 @@
 			<div style="clear:both"></div>
 		</div>
 		<div id="SG_verb"  class="SG_statementProperties box">
-			<label><h3>II. Verb <span class="required">Required</span></h3>
+			<label>
+				<h3>II. Verb <span class="required">Required</span></h3>
 				<div id="adlverbs"></div>
 			 </label>
 		 </div>
@@ -404,17 +407,73 @@ Note: Revision has no behavioral implications within the scope of xAPI. It is si
 	
 	</div><!--end version-->
 	
-	<div id="attachments">
+	<div id="SG_attachments" class="SG_statementProperties box">
 	<!--
 	Property	Type	Description	Required
-	usageType	IRI	Identifies the usage of this attachment. For example: one expected use case for attachments is to include a "completion certificate". A type IRI corresponding to this usage should be coined, and used with completion certificate attachments.	Required
-	display	Language Map	Display name (title) of this attachment.	Required
+	x-usageType	IRI	Identifies the usage of this attachment. For example: one expected use case for attachments is to include a "completion certificate". A type IRI corresponding to this usage should be coined, and used with completion certificate attachments.	Required
+	x-display	Language Map	Display name (title) of this attachment.	Required
 	description	Language Map	A description of the attachment	Optional
 	contentType	Internet Media Type	The content type of the attachment.	Required
 	length	Integer	The length of the attachment data in octets.	Required
 	sha2	String	The SHA-2 (SHA-256, SHA-384, SHA-512) hash of the attachment data. SHA-224 SHOULD not be used: a minimum key size of 256 bits is recommended.	Required
 	fileUrl	IRL	An IRL at which the attachment data may be retrieved, or from which it used to be retrievable.
 	-->
+	<h4>Attachments</h4>
+		(not entirely working yet! If it doesn't create a SHA-2 string for you, clear your cache, refresh the page, and try again.)
+		 <span class="optional">
+		 	IRI	Identifies the usage of this attachment. For example: one expected use case for attachments is to include a "completion certificate". 
+		 	A type IRI corresponding to this usage should be coined, and used with completion certificate attachments. Required
+		 </span>
+				<div>
+					<label>Usage Type 
+						<!--https://registry.tincanapi.com/#home/attachmentUsages-->
+							 <select id="SG_attachments_UsageType">
+							<option value="" selected>Select a usage type</option>
+							<option value="http://adlnet.gov/expapi/attachments/signature">Signature</option>
+							<option value="http://id.tincanapi.com/attachment/certificate-of-completion">Certificate of Completion</option>
+							<option value="http://id.tincanapi.com/attachment/contract">Contract</option>
+							<option value="http://id.tincanapi.com/attachment/supporting_media">Supporting Media</option>
+							</select>
+					</label>
+				</div>
+		<label>
+				Display Title <span class="required">(English only)</span>
+				<input type = "text" name="SG_attachments_display_title" value="" id="SG_attachments_display_title" onclick=""/>
+		</label>
+		<label>Description <span class="optional">(English only)</span>
+				<input type = "text" name="SG_attachments_description" value="" id="SG_attachments_description"  onclick=""/>
+		</label>
+		<label>Content Type <span class="required">The content type of the attachment.	Required</span>
+					<!--http://reference.sitepoint.com/html/mime-types-full-->
+						<a name="SG_attachments_content_type"></a><select id="SG_attachments_content_type">
+						<option value="" selected>Select a content type for this attachment</option>
+						<option value="application/pdf">PDF</option>
+						<option value="text/html">HTML</option>
+						<option value="text/csv">CSV</option>
+						<option value="application/zip">Zip</option>
+						</select>
+					</label>
+		
+		
+		<input type="file" id="files" name="file" />  
+		<span class="readBytesButtons">
+		 <!-- <button data-startbyte="0" data-endbyte="4">1-5</button>
+		  <button data-startbyte="5" data-endbyte="14">6-15</button>
+		  <button data-startbyte="6" data-endbyte="7">7-8</button>-->
+		  <button>submit file</button>
+</span>
+<div id="byte_range"></div><BR>
+<div id="byte_content"></div><BR>
+<div id="crypto_sha256"></div>
+		<label>Length <span class="required">Integer	The length of the attachment data in octets.	Required</span>
+				<input type = "number" name="SG_attachments_length" value="" id="SG_attachments_length" onclick=""/>
+		</label>
+		<label>SHA-2 <span class="required">Integer	The SHA-2 (SHA-256, SHA-384, SHA-512) hash of the attachment data. SHA-224 SHOULD not be used: a minimum key size of 256 bits is recommended.	Required</span>
+				<input type = "number" name="SG_attachments_sha2" value="" id="SG_attachments_sha2"  onclick=""/>
+		</label>
+		<label>File URL <span class="required">IRL	An IRL at which the attachment data may be retrieved, or from which it used to be retrievable.</span>
+				<input type = "url" name="SG_attachments_fileURL" value="" id="SG_attachments_fileURL"   onclick=""/>
+		</label>
 	</div><!--end attachments-->
 	
 	<div id="dataconstraints">
@@ -430,7 +489,10 @@ Note: Revision has no behavioral implications within the scope of xAPI. It is si
 		<form id="form2"  class="formular" style="left:20px;margin:0px;padding-top:6px;">
 	<a name="sendstatementfreetext"></a><h2 style="">Send Statement<a href="#" id="sendStatementToggle" class="toggleLink" onclick="return false;">show</a></h2>
 	<div class="box" id="sendStatementInputs" style="display:none;">
-		Paste your own pre-written statement into the box below and click Send Statement 1. 	
+		Paste your own pre-written statement into the box below and click Send Statement 1. 
+		If you want to validate statements you are crafting by hand, use this validator to correct them: <a href="http://zackpierce.github.io/xAPI-Validator-JS/" target="_blank">http://zackpierce.github.io/xAPI-Validator-JS/</a> 
+
+			
 		<p><a href="" id="toggle1" class="toggles closed" onclick="expandtext(this.id);return false;"></a>
 		<span>click to expand</span><textarea rows="10" cols="80" name="statement" value="x" id="statement" accept-charset="UTF-8" class="closed">
 		{"actor" : {"mbox" : "mailto:joe@example.com","name":"Joe XAPIWrapperTester","objectType": "Agent"},
@@ -722,10 +784,14 @@ Note: Revision has no behavioral implications within the scope of xAPI. It is si
 				 </div><!--end correctRespPatternExamples-->
 </body>
 <script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js'></script> 
-<script src="js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>-->
 <script src="js/base64.js"></script>
 <script src="js/2.5.3-crypto-sha1.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/sha256.js"></script>
+<!--<script src="js/sha256.js"></script>-->
+<script src="http://crypto-js.googlecode.com/svn/tags/3.0.2/build/components/enc-base64-min.js"></script>
+
 <script src="js/verbs.js"></script>
 <script src="js/xapiwrapper.js"></script>
 <script src="js/config.js"></script>

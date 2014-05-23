@@ -25,8 +25,20 @@ if ( !Date.prototype.toISOString ) {
   }() );
 }
 
-(function(ADL){
-    log.debug = true;
+(function(ADL, logDebugInfo){
+
+    // outputs the message to the console if available
+	var log = function(message) {
+		if (logDebugInfo) {
+			try
+			{
+				console.log(message);
+				return true;
+			}
+			catch(e){return false;}
+		}
+	};
+	
     // config object used w/ url params to configure the lrs object
     // change these to match your lrs
     var Config = function()
@@ -66,12 +78,20 @@ if ( !Date.prototype.toISOString ) {
 
         function getbase(url)
         {
+			// using createElement("a") as a shortcut for parsing a URL into constituent pieces. In Chrome, assigning "undefined" 
+			// to a link's href results in the link referring to the current page. In IE, it does not [or at least the protocol and host
+			// portions are not created the same].
+			if (url === undefined) {
+                log("Endpoint not specified, using current URL as default");
+				url = document.location.href;
+			}
+			
             var l = document.createElement("a");
             l.href = url;
             if (l.protocol && l.host)
                 return l.protocol + "//" + l.host;
             else
-                ADL.XAPIWrapper.log("Couldn't create base url from endpoint: " + this.lrs.endpoint);
+                log("Couldn't create base url from endpoint: " + url);
         }
 
         function updateAuth(obj, username, password){
@@ -98,18 +118,18 @@ if ( !Date.prototype.toISOString ) {
                             }
                             if (!versionOK)
                             {
-                                ADL.XAPIWrapper.log("The lrs version [" + lrsabout.version +"]"+
+                                log("The lrs version [" + lrsabout.version +"]"+
                                     " does not match this wrapper's XAPI version [" + ADL.XAPIWrapper.xapiVersion + "]");
                             }
                         }
                         catch(e)
                         {
-                            ADL.XAPIWrapper.log("The response was not an about object")
+                            log("The response was not an about object")
                         }
                     }
                     else
                     {
-                        ADL.XAPIWrapper.log("The request to get information about the LRS failed: " + r);
+                        log("The request to get information about the LRS failed: " + r);
                     }
                 });
         }
@@ -128,7 +148,7 @@ if ( !Date.prototype.toISOString ) {
             }
             catch(e)
             {
-                ADL.XAPIWrapper.log("Error trying to hash -- " + e);
+                log("Error trying to hash -- " + e);
                 return null;
             }
         };
@@ -136,7 +156,7 @@ if ( !Date.prototype.toISOString ) {
         this.changeConfig = function(config){
             try
             {
-                ADL.XAPIWrapper.log("updating lrs object with new configuration");
+                log("updating lrs object with new configuration");
                 this.lrs = mergeRecursive(this.lrs, config);
                 if (config.user && config.password)
                     this.updateAuth(this.lrs, config.user, config.password);
@@ -144,7 +164,7 @@ if ( !Date.prototype.toISOString ) {
             }
             catch(e)
             {
-                ADL.XAPIWrapper.log("error while changing configuration -- " + e);
+                log("error while changing configuration -- " + e);
             }
         };
 
@@ -196,9 +216,6 @@ if ( !Date.prototype.toISOString ) {
 
     // tests the configuration of the lrs object
     XAPIWrapper.prototype.testConfig = testConfig;
-
-    // writes to the console if available
-    XAPIWrapper.prototype.log = log;
 
     /*
      * sendStatement
@@ -413,7 +430,7 @@ if ( !Date.prototype.toISOString ) {
             }
             else
             {
-                this.log("No activity state was included.");
+                log("No activity state was included.");
                 return false;
             }
             //(lrs, url, method, data, auth, callback, callbackargs, ignore404, extraHeaders) 
@@ -536,7 +553,7 @@ if ( !Date.prototype.toISOString ) {
             }
             else
             {
-                this.log("No activity profile was included.");
+                log("No activity profile was included.");
                 return false;
             }
 
@@ -686,7 +703,7 @@ if ( !Date.prototype.toISOString ) {
             }
             else
             {
-                this.log("No agent profile was included.");
+                log("No agent profile was included.");
                 return false;
             }
 
@@ -755,25 +772,13 @@ if ( !Date.prototype.toISOString ) {
         }
     }
 
-    // outputs the message to the console if available
-    function log(message) 
-    {
-        if (!log.debug) return false;
-        try
-        {
-            console.log(message);
-            return true;
-        }
-        catch(e){return false;}
-    }
-
     // merges two object
     function mergeRecursive(obj1, obj2) 
     {
         for (var p in obj2) 
         {
             prop = obj2[p];
-            console.log(p + " : " + prop);
+            log(p + " : " + prop);
             try 
             {
                 // Property in destination object set; update its value.
@@ -1077,4 +1082,4 @@ if ( !Date.prototype.toISOString ) {
 
     ADL.XAPIWrapper = new XAPIWrapper(Config, false);
     
-}(window.ADL = window.ADL || {}));
+}(window.ADL = window.ADL || {}, /* debug enabled */true));
